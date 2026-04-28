@@ -123,8 +123,99 @@ Similarly, we can define the "translation by $x$" map, for $x$ an $X$-point of
 	Let $R$ be a Dedekind Domain, 
 \end{definition}
 
-\section{Neron Models}
+\section{N\'eron Models}
+
+Throughout this section, let $S = \text{Spec}(R)$ denote the spectrum of a Dedekind domain $R$ with fraction field $K$, for example let $R$ be the ring of integers of a number field. 
+For any scheme $Y$ over $S$, we will denote $Y_K$ for its generic fiber $Y \times_{S} \text{Spec}(K)$.
+Most of this section can be done more generally for Dedekind Schemes (noetherian normal schemes of dimension $\leq 1$), where we take $K = \prod_i K(\eta_i)$ for $\eta_i$ ranging over the generic components of the (finitely many) irreducible components.
+As such many theorems will use this terminology. \newline
+
+\indent As 
+\todo{Dedekind Schemes?}
+
+\subsection{Basic Properties of N\'eron Models}
+
+Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over $S$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we call $S$-models of $X$.  
+One naturally asks if there are minimal such lifts, which gives us the most general definition of a Neron Model, as in \cite{BLR}.
+
+\begin{definition}
+	Let $X_K$ be a smooth and separated $K$-scheme of finite type. A N\'eron model of $X_K$ is an $S$-model of $X$  of $X_K$ which is smooth, separated, and of finite type which satisfies the following universal property (which we call the N\'eron mapping property).\\
+	\indent \textbf{For each smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$, there exists a unique $S$-morphism $\mu: Y \to X$ extending $u_K$}.
+\end{definition}
+
+\noindent Immediately from its definition we have the following important facts.
+
+\begin{proposition}[Basic Properties of N\'eron Models]
+Let $X$ be a N\'eron model for its generic fiber $X_K$. Then the following hold:
+\begin{enumerate}
+  \item $X$ is uniquely determined by $X_K$ up to unique isomorphism.
+  \item The natural map $X(S) \to X_K(K)$ is bijective, in other words every $K$-point of $X_K$ lifts to an $S$-point of $X$.
+  \item N\'eron models commute with \'etale base change, i.e. if $S' \to S’$ is  \'etale, with $K'$ the ring of rational functions on $S'$, then $X \times_S S'$ is a N\'eron model for $X_K \times_{\text{Spec(K)}} \text{Spec}(K')$. 
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	The proof of (a) is the usual one for objects defined by universal properties. Namely, for two such models $X$ and $X'$ the identity morphisms  on their generic fibers induce maps $f:X \to X'$ and $g: X' \to X$ from the N’eron mapping property. Then $f \circ g$ and $g \circ f$ are unique lifts of the identity morphisms of the generic fibers, but the identity morphism already satisfies this so they must be equal. 
+	Hence $f \circ g = \text{id}_{X'}$ and $g \circ f = \text{id}_{X}$ which shows $X$ and $X'$ are isomorphic. \newline
+\indent
+\todo{Complete proofs}
+\end{proof}
+
+
+\begin{proposition}
+	Let $S$ be a normal noetherian base scheme, and $u: Z \to G$ an $S$-rational map from a smooth $S$-scheme $Z$ and separated $S$-group shceme $G$.
+	If $u$ is defined in codimension $\leq 1$, it is defined everywhere.
+\end{proposition}
+
+\begin{proof}
+	\cite{BLR}, pg.116, fill in and do.
+\end{proof}
+
+\begin{proposition}
+	Let $X$ be a proper and smooth $S$-group scheme with connected fibers. 
+	Then $X$ is a N\'eron model of its generic fiber $X_K$.
+\end{proposition}
+
+\begin{proof}
+	\cite{BLR}, pg.22
+\end{proof}
+
+\subsection{Local-Global Principles for N\'eron Models}
+\begin{proposition}
+	Let $S$ be a Dedekind Scheme and $X$ an $S$-scheme of finite type.
+	Then the following are equivalent
+	\begin{enumerate}
+		\item $X$ is a N\'eron model of its generic fiber
+		\item For each closed point $s \in S$, the $\mc{O}_{S,s}$-scheme $X \times_S \mc{O}_{S,s}$ is a N\'eron model of its generic fiber.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\cite{BLR}, pg.21, uses an EGA lemma.
+\end{proof}
+
+\begin{proposition}
+	Let $S$ be a Dedekind scheme with ring of rational functions $K$, and let $X_K$ be a smooth and separated $K$-scheme of finite type.
+	Then the following are equivalent.
+\begin{enumerate}
+	\item There exists a global N\'eron model $X$ of $X_K$ over $S$.
+	\item There exists a dense open subscheme $S' \subset S$ such that $X_K$ admits a N\'eron model over $S'$ as well as N\'eron models for the (finitely many) closed points of $S - S'$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\cite{BLR}, pg.25
+\end{proof}
+
+
+
+\subsection{N\'eron Models of Elliptic Curves}
 
 \section{Uses of Neron Models}
+
+
+
+\bibliographystyle{plain}
+\bibliography{lib}
 
 \end{document}
