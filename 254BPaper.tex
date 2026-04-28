@@ -62,7 +62,7 @@
 
 \begin{document}
 
-\title{Neron Models of Elliptic Curves}
+\title{N\'eron Models of Elliptic Curves}
 
 \author{Daniel Ao}
 \maketitle
@@ -76,7 +76,7 @@
 
 \subsection{Group Schemes}
 
-We will introduce group schemes from the functor of points view, and also show that its equivalent to the usual definitions.
+We will introduce group schemes from the functor of points view, and also show that its equivalent to the traditional definitions.
 
 \begin{definition}
 	An $S$-scheme $X$ is a group scheme if the functor 
@@ -133,6 +133,7 @@ As such many theorems will use this terminology. \newline
 \indent As 
 \todo{Dedekind Schemes?}
 
+\subsection{}
 \subsection{Basic Properties of N\'eron Models}
 
 Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over $S$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we call $S$-models of $X$.  
@@ -209,7 +210,31 @@ Let $X$ be a N\'eron model for its generic fiber $X_K$. Then the following hold:
 
 
 
-\subsection{N\'eron Models of Elliptic Curves}
+\section{Elliptic Curves}
+
+In this section, we prove the existence of N\'eron models for elliptic curves over $K$, the fraction field of a Dedekind domain $R$. 
+The majority of our time will be spent in showing the existence for the local case where $R$ is a discrete valuation rings, which will requires the introduction of the notion of special henselization. \newline
+
+Before we get too deep, let's just consider the problem of constructing $S$-models of $K$-schemes without worrying about them having nice properties quite yet.
+For simplicity, assume that $S = \text{Spec}(R)$ for $R$ a Dedekind domain.
+In the affine case, suppose we have $X \cong \text{Spec}(K[x_1, \dots, x_n]/I)$, where we may let $I = (f_1, \dots, f_n)$ have finitely many generators by noetherianity. 
+We do the most natural thing and note that we can scale the finitely many $f_i$ by a nonzero common multiple (though not unique) $r \in R$ such that each $rf_i \in R[x]$.
+In this way, we have that $R[x]/(rf_1, \dots, rf_n)$ is a model for $X$ as the generic fiber is the spectrum of 
+\[K \otimes_K R[x]/(rf_1, \dots, rf_n) = K[x]/(rf_1, \dots, rf_n)\]
+and $r$ is a unit in $K$. \newline
+
+\indent Similarly, in the projective case when $K \cong \text{Proj}(K[x_1, \dots, x_n]/(g_1, \dots, g_n))$ for homogeneous $g_i$ we can similarly scale them by nonzero (and still non-unique) $r \in R$ to obtain integral models $\text{Proj}(R[x_1, \dots, x_n]/(rg_1, \dots, rg_n))$  for $X$.
+In fact, note that $X$ is still projective, so satisfies the property that $K$-points extend uniquely to $R$-points, an important consequence of the N\'eron mapping property ().
+
+
+\subsection{The Local Case}
+
+Throughout this section, $S = \text{Spec}(R)$ for $R$ a discrete valuation ring with fraction field $K$.
+An elliptic curve $E/K$ is a projective curve, so as mentioned in the discussion above there are projective $\text{Spec}(R)$-models for $E$ which are potential candidates for N\'eron models.
+In this section we will show that in the case when $E$ has good reduction the N\'eron mdoel can be recovered this way.
+However, more work will need to be done when there is bad reduction.
+
+\indent First 
 
 \section{Uses of Neron Models}
 
