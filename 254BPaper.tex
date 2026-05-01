@@ -18,7 +18,7 @@
 \usepackage{array}
 \usepackage{colonequals}
 \usepackage{todonotes}
-\usepackage{theoremref}
+\usepackage{cleveref}
 
 \font\maljapanese=dmjhira at 2.5ex
 \newcommand{\yo}{\textrm{\!\maljapanese\char"48}}
@@ -71,30 +71,79 @@
 
 \section{Introduction}
 
+\todo{Give intro}
 
 \section{Group Schemes and Arithmetic Surfaces}
 
 \subsection{Group Schemes}
 
-We will see that the primary objects of interest when it comes to N\'eron models are group schemes.
-In this section we introduce group schemes from the functor of points view, and also show that its equivalent to the traditional definitions.
-At the end, we introduce the notion of arithmetic surfaces which we will later use to show the existence of N\'eron models for elliptic curves over Dedekind domains.
+\indent The primary objects of interest for us when it comes to N\'eron models will be group schemes.
+In this section we introduce group schemes from the functor of points view, and also show that its equivalence to the traditional definitions involving maps between products.
+As an use, this will give us natural ways of defining multiplication by $n$ and translation maps for arbitrary group schemes.\newline
+\indent Towards the end of this section, we introduce the notion of arithmetic surfaces.
+A major theorem will be the existence of certain minimal such ones for nice enough curves, which we will later use to show the existence of N\'eron models for elliptic curves over a fraction field of a Dedekind domain.
 
 \begin{definition}
 	An $S$-scheme $G$ is a group scheme if the functor 
-	\[\text{Hom}(-, G): \textbf{Sch/S} \to \textbf{Set}\]
- factors through the category $\textbf{Group}$.
+	\[\text{Hom}(-, G): \textbf{Sch/S}^{\textbf{op}} \to \textbf{Set}\]
+	factors through the forgetful functor from $\textbf{Group}$ to $\textbf{Set}$.
 \end{definition}
 
 In other words, for any $S$-scheme $T$, the set of $T$-points of $G$ forms a group, which is functorial in $T$.
-We show that this is equivalent to the usual definitions of groups schemes, being the existence of maps 
-\[e: \text{Spec}(S) \to G, \quad \quad i:G \to G, \quad \quad \mu: G \times G \to G, \]
-such that the following squares commute:
+We will show its equivalence to the usual definitions in the more general setting of a category with finite products.
+
+\begin{theorem}
+	Let $\mc{C}$ be a category with finite products, and let $*$ be a terminal object.
+	Let $G \in C$ be an object of $C$.
+	Then the functor $\text{Hom}(-, G): \mc{C}^{\textbf{op}} \to \textbf{Set}$ factors through the forgetful functor from \textbf{Group} to \textbf{Set} if and only if there exist maps 
+\[e: * \to G, \quad \quad i:G \to G, \quad \quad \mu: G \times G \to G, \]
+such that the following square commutes:
+\[\begin{tikzcd}
+	{G\times G \times G} & {G \times G} & G & {G \times G} & G & {G \times G} \\
+	{G \times G} & G & {G \times G} & G & {G \times G} & G
+	\arrow["{\text{id} \times \mu}", from=1-1, to=1-2]
+	\arrow["{\mu \times \text{id} }"', from=1-1, to=2-1]
+	\arrow["\mu", from=1-2, to=2-2]
+	\arrow["{e' \times \text{id}}", from=1-3, to=1-4]
+	\arrow["{\text{id} \times e'}"', from=1-3, to=2-3]
+	\arrow["{\text{id}}"{description}, from=1-3, to=2-4]
+	\arrow["\mu", from=1-4, to=2-4]
+	\arrow["{i \times \text{id}}", from=1-5, to=1-6]
+	\arrow["{\text{id} \times i}"', from=1-5, to=2-5]
+	\arrow["{e'}"{description}, from=1-5, to=2-6]
+	\arrow["\mu", from=1-6, to=2-6]
+	\arrow["\mu"', from=2-1, to=2-2]
+	\arrow["\mu"', from=2-3, to=2-4]
+	\arrow["\mu"', from=2-5, to=2-6]
+\end{tikzcd}\]
+where $e'$ is the unique map $G \to * \xrightarrow{e} G$.
+\end{theorem}
+
+\begin{proof}
+	The terminal object $*$ exists as it is the product over the empty diagram. 
+	Now first suppose that there exist maps $e, i, \mu$ as described which make the diagrams commute.
+	For any object $X$ of $\mc{C}$ we describe a natural group structure on $\text{Hom}(X,G)$.
+	Any $f_1, f_2 \in \text{Hom}(X,G)$ define an unique map $X \to G \times G$ by the universal property of products.
+	Composing this with the map $\mu: G \times G \to G$ gives another map $f_1 \times f_2: X \to G$ which we denote as the product; we now show forms a group, where the inverse map $f^{-1}$ of $f \in \text{Hom}(X,G)$ is $i \circ f$ and the identity element $f_e$ is the map $X \to * \xrightarrow{e} G$. \newline
+	\indent Note that $f_e$ acts as an identity as the map as for any other map $f$ the composition is the map   
+
+	Conversely, suppose that $\text{Hom}(-, G): \mc{C} \to \text{Set}$ factors through the forgetful functor from \textbf{Group} to \textbf{Set}.
+
+	\todo{Finish proof}
+\end{proof}
+
+
 
 \todo{Proof of equivalence}
 
 \begin{example}
 	An elliptic curve is a group scheme.
+\end{example}
+
+\begin{example}
+	Consider $\mb{A}_{\Z}^1 \cong \text{Spec}(\Z[x])$ in the category of schemes.
+	Then as is the case for affine schemes we have $\text{Hom}(-, \mb{A}_{\Z}^1) \cong \text{Hom}_{\textbf{CRing}}(\Z[x], \Gamma(-, \mc{O}_{(-)}))$ is the global section functor.
+	Using the underlying 
 \end{example}
 
 \begin{definition}
@@ -114,6 +163,10 @@ In fact, these are defined for any abelian group scheme.
 The multiplication by $m$ endomorphism map for a group scheme $X$ over $S$, is the map induced by Yoneda from the natural transformation $(-)^n \,:\, \text{Hom}(-,X) \to \text{Hom}(-,X)$, which for each $S$-scheme $U$, the component $\text{Hom}(U,X) \to \text{Hom}(U,X)$ is the multlpication by $n$ mp.
 \end{definition}
 
+\begin{remark}
+	
+\end{remark}
+
 Similarly, we can define the "translation by $x$" map, for $x$ an $X$-point of
 
 \begin{definition}
@@ -122,6 +175,10 @@ Similarly, we can define the "translation by $x$" map, for $x$ an $X$-point of
 
 
 \subsection{Arithmetic Surfaces}
+
+Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over a scheme $S$ with function field $K$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we will call \textit{$S$-models} of $X$.  
+We define one nice example of such a lift through Arithmetic surfaces; N\'eron models will also be such objects as we will later encounter.
+
 
 
 \begin{definition}
@@ -168,7 +225,7 @@ $\mb{P}^1_R$  perhaps?
 
 \end{proposition}
 
-\begin{theorem}[Minimal Proper Regular Models (Abhyankar, Lipman, Lichtenbaum, Shafarevich)]
+\begin{theorem}[Minimal Proper Regular Models (Abhyankar, Lipman, Lichtenbaum, Shafarevich)]\label{min-as}
 	Let $C/K$ be a non-singular projective curve of genus $g$.
 	Then there exists a proper, regular arithmetic over $R$ with generic fiber isomorphic to $C/K$ which we call proper regular models for $C/K$.
 	Furthermore, if $g \geq 1$, then there exists a minimal proper regular model $C^{min}/K$ satisfying the following minimality property: \newline
@@ -178,22 +235,18 @@ $\mb{P}^1_R$  perhaps?
 
 \section{N\'eron Models}
 
-Throughout this section, let $S = \text{Spec}(R)$ denote the spectrum of a Dedekind domain $R$ with fraction field $K$, for example let $R$ be the ring of integers of a number field. 
-For any scheme $Y$ over $S$, we will denote $Y_K$ for its generic fiber $Y \times_{S} \text{Spec}(K)$.
-Most of this section can be done more generally for Dedekind Schemes (noetherian normal schemes of dimension $\leq 1$), where we take $K = \prod_i K(\eta_i)$ for $\eta_i$ ranging over the generic components of the (finitely many) irreducible components.
-As such many theorems will use this terminology. \newline
+Throughout this section, we will work as generally as we can, letting $S$ denote a \textit{Dedekind domain} (noetherian normal scheme of dimension $\leq 1$) as in \cite{BLR}, unless otherwise specified. 
+Note then all local rings of $S$ are either fields or discrete valuation rings, in particular $S$ is always regular.
+We denote $K = \prod_{i} K(\eta_i)$ be the \textit{ring of rational fractions} for $\eta_i$ the finitely many generic points of the irreducible components of $S$. 
+For any scheme $Y$ over $S$, we will denote $Y_K$ for its generic fiber $Y \times_{S} \text{Spec}(K)$. \newline
 
-\indent As 
-\todo{Dedekind Schemes?}
+\indent As mentioned in our discussion on arithmetic surfaces, for a scheme $X$ over Spec($K$), our interest will be in models of schemes $X$ over $\text{Spec}(K)$ which can be though of as lifts $X'$ over $S$ with generic fiber $X'_K$ is isomorphic to $X$. 
+In the case of the question of whether there is a notion of a minimal such model, one potential answer was given in \Cref{min-as}. 
+Another notion comes in the form of N\'eron Models.
 
-
-
-Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over $S$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we call $S$-models of $X$.  
-One naturally asks if there are minimal such lifts, which gives us the most general definition of a Neron Model, as in \cite{BLR}.
-
-\begin{definition}
-	Let $X_K$ be a smooth and separated $K$-scheme of finite type. A N\'eron model of $X_K$ is an $S$-model of $X$  of $X_K$ which is smooth, separated, and of finite type which satisfies the following universal property (which we call the N\'eron mapping property).\\
-	\indent \textbf{For each smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$, there exists a unique $S$-morphism $\mu: Y \to X$ extending $u_K$}.
+\begin{definition}[N\'eron Model]\label{def:NM}
+	Let $X_K$ be a smooth and separated $K$-scheme of finite type. A \textit{N\'eron model} of $X_K$ is an $S$-model of $X$  of $X_K$ which is smooth, separated, and of finite type which satisfies the following universal property (which we call the N\'eron mapping property).\\
+	\indent \textbf{For each smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$, there exists a unique $S$-morphism $u: Y \to X$ extending $u_K$}.
 \end{definition}
 
 \noindent Immediately from its definition we have the following important facts.
@@ -202,35 +255,132 @@ One naturally asks if there are minimal such lifts, which gives us the most gene
 Let $X$ be a N\'eron model for its generic fiber $X_K$. Then the following hold:
 \begin{enumerate}
   \item $X$ is uniquely determined by $X_K$ up to unique isomorphism.
-  \item The natural map $X(S) \to X_K(K)$ is bijective, in other words every $K$-point of $X_K$ lifts to an $S$-point of $X$. 
+  \item The natural map $X(S) \to X_K(K)$ is bijective, in other words every $K$-point of $X_K$ lifts to an unique $S$-point of $X$. 
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-	The proof of (a) is the usual one for objects defined by universal properties. Namely, for two such models $X$ and $X'$ the identity morphisms  on their generic fibers induce maps $f:X \to X'$ and $g: X' \to X$ from the N’eron mapping property. Then $f \circ g$ and $g \circ f$ are unique lifts of the identity morphisms of the generic fibers, but the identity morphism already satisfies this so they must be equal. 
+	The proof of (1) is the usual one for objects defined by universal properties. Namely, for two such models $X$ and $X'$ the identity morphisms  on their generic fibers induce maps $f:X \to X'$ and $g: X' \to X$ from the N’eron mapping property. Then $f \circ g$ and $g \circ f$ are unique lifts of the identity morphisms of the generic fibers, but the identity morphism already satisfies this so they must be equal. 
 	Hence $f \circ g = \text{id}_{X'}$ and $g \circ f = \text{id}_{X}$ which shows $X$ and $X'$ are isomorphic. \newline
-\indent
-\todo{Complete proofs}
+	\indent To prove (2), note that $S$ is smooth over itself, now applying the N\'eron mapping property for its generic fiber $\text{Spec}(K)$ tells us precisely every $K$-point of $X_K$ lifts uniquely to an $S$-point of $X$.
 \end{proof}
+
+\begin{remark}
+	\todo{etale extension?}
+\end{remark}
+
+When verifying that that a scheme satisifes the N\'eron mapping property, we show that we in fact do not need to worry about uniqueness of the lifts; this relies on the separatedness of N\'eron models and the condition that we only worry about maps from smooth schemes. 
+
+\begin{proposition}\label{unique-extension}
+Let $X_K$ be a smooth and separated $K$-scheme of finite type and $X$ an $S$-model of $X_K$ which is smooth, separated, and of finite type.
+Suppose that for any smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$ that there exists some $S$-morphism $u: Y \to X$ extending $u_K$, then $u_K$ is unique, hence $X$ is a N\'eron model for $X_K$.
+\end{proposition}
+
+\begin{proof}
+	Consider any two possible extensions $u_1, u_2: Y \to X$ extending $u_K$.
+	We first show that the generic fiber $Y_K \subset Y$ is dense in $Y$.
+	Indeed, since $Y$ is flat and locally of finite presentation over $S$ (as it is smooth over $S$) its structure morphism is an open morphism [\cite{SP}, Lemma 29.25.10]. 
+Then every nonempty open $U$ of $Y$ maps to a nonempty open in $S$, which must contain a generic point, i.e. $U$ intersects the generic fiber hence it is dense. \newline
+\indent Now note that $S$ is regular being a Dedekind scheme, hence $Y$ is regular as it is smooth over $S$: in particular it is reduced. 
+Now the Reduced-To-Separated Theorem [\cite{FOAG}, 11.3.2] shows any two maps which extends $u$ must be the same.
+To be more precise, one can show that the closed subscheme $E$ which $u_1$ and $u_2$ agree on is the limit of the below diagram 
+\[\begin{tikzcd}
+	E & X \\
+	Y & {X \times_S X}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+	\arrow["\delta", from=1-2, to=2-2]
+	\arrow["{u_1 \times u_2}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+which upon base-changing to $K$ (which preserves fiber products), shows that the generic fiber factors through $E$, hence $E$ is a closed subscheme containing all of $Y$, and must be all of $Y$ as it is reduced.
+\end{proof}
+
+Thus to verify the N\'eron mapping property, we only need to show existence of lifts which we will make us of later on.
+
 
 \subsection{N\'eron Models of Group Schemes}
 
-\todo{intro..}
+Our interest N\'eron Models will be primarily in the form of group schemes.
+One nice reason is that N\'eron models respect the group scheme structure, which we give below without proof.
 
-
-\begin{proposition}
+\begin{proposition}[\cite{BLR}, 1.2, Proposition 6]
 	Let $X$ be a smooth and separated $S$-scheme which is a N\'eron model of its generic fiber $X_K$.
 	If $X_K$ is a $K$-group scheme, then the group scheme structure extends to an $S$-group scheme structure on $X$.
 \end{proposition}
 
-\begin{proposition}
-	Let $S$ be a normal noetherian base scheme, and $u: Z \to G$ an $S$-rational map from a smooth $S$-scheme $Z$ and separated $S$-group shceme $G$.
-	If $u$ is defined in codimension $\leq 1$, it is defined everywhere.
+\begin{remark}
+Furthermore, in the group scheme case, we do not need to worry about the separatedness criterion for N\'eron models in $\Cref{def:NM}$.
+	Indeed, \todo{give proof?} 
+\end{remark}
+
+
+\begin{proposition}\label{weil-extension}
+	Let $S$ be a normal noetherian base scheme, and $u: Z \to G$ an $S$-rational map from a smooth $S$-scheme $Z$ to a smooth and separated $S$-group scheme $G$.
+Then the set of points in $Z$ where $u$ is not defined if pure codimension 1.
+In particular, if $u$ is defined in codimension $\leq 1$, it is defined everywhere.
 \end{proposition}
 
 \begin{proof}
-	\cite{BLR}, pg.116, fill in and do, might need a lemma.
+	This proof is a bit long and involved, so we we will only give an overview of the argument; for the complete proof see [\cite{BLR}, 4.4, Theorem 1].
+	We first assume the proposition in the case when $G$ is any affine scheme, this is proved by using the fact that $Z$ is also locally noetherian being locally of finite type over $S$ and normal as it is regular.
+	And as a result any rational map from $Z$ to an affine scheme defined codimension $\leq 1$ is defined everywhere using the fact that rational functions defined over codimension $\leq 1$ are defined everywhere for locally noetherian and normal schemes [see \cite{FOAG}, 13.5.I]. \newline
+	\indent Now in the general case, we can use the fact that $G$ is a group scheme to exploit the affine case.
+	Assume that $u$ is defined in codimension $\geq 2$.
+	Let $U$ denote the maximal domain of definition of $U$.
+	Consider the rational map $v: Z \times_S Z \to G$ which is the composition $u \times (u \circ i)\,:\,Z \times_S  Z \to G \times G$ composed with the the multiplication morphism $\mu: G \times G \to G$.
+	Let $F$ denote the maximal domain of definition of $V$, then clearly $U \times U$ lies in it.
+	The main thing that we show  is that the image of the diagonal map $\Delta: Z \to Z \times_S Z$ lies in $F$.
+	Denote $A$ the image of the diagonal $\Delta$ which we will sometimes identify with $Z$; we want to show $F \ic A = \emptyset$
+	Now the map $Z \xrightarrow{\Delta} Z \times_S Z \xrightarrow{v} G$ from construction factors through the unit section $F: S \to G$. 
+	Assume for sake of contradiciton there is a $x \in F \ic A$ and let $s$ denotes its image in $S$.
+	We may choose an affine open $H$ containing $e(s) \in G$, whose pre-image in $Z \times_S Z$ we denote as $W$.
+	Then our rational map $v$ restricted to $W$ factors through the affine $H$, so applying our initial assumption, the locus $F'$ where it isn't defined is of pure codimension 1.
+	Considering $F' \ic A$, it must contain $U \subset Z$ (once again identifying $A$ with $Z$) which is of codimension $\geq 2$ in $A$ by assumption.
+	However, as $F'$ is of pure codimension 1, one can show its intersection with $A$ also drops the codimension at most 1, a contradiction.
+	Thus $F$ contains diagonal $A$ as claimed. \newline
+\indent Now all that remains is to show that that $U = Z$.
+Using [\cite{BLR}, 2.5, Proposition 5] it suffices to give a faithfully flat $S$-morphism $f:Z' \to Z$ where $Z'$ is an $S$-scheme smooth of finite type such that $u \circ f$ is defined everywhere.
+Our choice is $Z'$ is the intersection of $V$ with $Z \times_S U \subset Z \times_S Z$, with the map being the projection along the first factor.
+This factor as an open immersion into a quotient map $Z \times_S Z \to Z$ which is smooth, hence their composite is flat.
+Thus to show faithful flatness all that remains is surjectivity which can be done by considering a geometric point of $Z$, and noting $V$ contains the diagonal and $U$ is open in $Z$.
+This map coincides with $Z' \to G$, written in coordinates as $(z_1, z_2) \to v(z_1, z_2)u(z_2)$, and is is defined everywhere as claimed.
 \end{proof}
+
+\begin{corollary}
+	Suppose that $G$ as in \Cref{weil-extension} is also proper. 
+	Then any $S$-rational map $u: Z \to G$ is defined everywhere.
+\end{corollary}
+
+\begin{proof}
+	From \Cref{weil-extension}, it suffices to show that $u$ is defined in codimension $\geq 2$.
+	Equivalently, $u$ is defined at the generic point $\eta$ of any irreducible subset $I \subset X$ of codimension 1.
+	Note that since $Z$ is regular its irreducible components are disjoint; since it is normal and locally noetherian as well being smooth over $S$ (which is Noetherian), each irreducible component (also the connected components) are open. 
+	Thus we may consider the case when $Z$ is irreducible, as if we show the rational map extends along each irreducible component it extends everywhere.\newline
+\indent
+	Consider the stalk $\mc{O}_{Z, \eta}$, by regularity of $Z$ is a discrete valuation ring and denote the image of the generic point of $Z$ in $G$ as $y$.
+	The map to $G$ factors through scheme-theoretic image of $u$, as $Z$ is reduced, the underlying set of the scheme-theoretic closure is equal to the closure of $y$ [\cite{FOAG}, 9.4.5], so it then suffices to assume $u$ is a dominant rational map.	
+	Note that $G$ is still proper being a closed subscheme of a proper $S$-scheme.
+	This induces maps of functions fields $\text{Spec}(K(Z)) \to \text{Spec}K((G))$, and applying the valuative criterion of properness to the diagram
+	% https://q.uiver.app/#q=WzAsNCxbMCwxLCJcXHRleHR7U3BlY30oKEsoWikpIl0sWzEsMSwiXFx0ZXh0e1NwZWN9KEsoRykpIl0sWzAsMCwiXFx0ZXh0e1NwZWN9KFxcbWN7T31fe1osIFxcZXRhfSkiXSxbMSwwLCJHIl0sWzAsMV0sWzIsMF0sWzMsMV0sWzIsM11d
+\[\begin{tikzcd}
+	{\text{Spec}(\mc{O}_{Z, \eta})} & G \\
+	{\text{Spec}((K(Z))} & {\text{Spec}(K(G))}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-1, to=2-2]
+\end{tikzcd}\]
+the rational map extends to a rational map $\mc{O}_{Z, \eta} \to Y$.
+We can spread this out to a rational map $Z \to Y$ which agrees on maps of function fields with $u$, hence are equivalent rational maps.
+Thus $Z$ is defined in codimension 1 and so extends everywhere.
+\end{proof}
+
+\begin{remark}
+	There are many seemingly differing definitions of N'eron models as compared to \Cref{def:NM}.
+	For example, in \cite{AEC2} for the case of $E/K$ an elliptic curve, it defines the N\'eron model as a smooth group scheme with generic fiber $E$, satisfying the extension property for \textit{rational} maps $X_K \to E$.
+		In light of the previous remark that $S$-group schemes separated and the previous proposotion which gives us that rational maps $X_K \to E$ are defined everywhere, we see that the two definitions are equivalent. 
+\end{remark}
 
 \begin{proposition}
 	Let $X$ be a proper and smooth $S$-group scheme with connected fibers. 
@@ -238,24 +388,38 @@ Let $X$ be a N\'eron model for its generic fiber $X_K$. Then the following hold:
 \end{proposition}
 
 \begin{proof}
-	\cite{BLR}, pg.22
+	We first note $X$ and $X_K$ satisfies all the requirements of \Cref{def:NM}.
+	$X$ is proper, it is also of finite type, and as previoiusly remarked it is also separated being an $S$-group scheme.
+	All these properties are preserved by base change, so the same is true for its generic fiber $X_K$. \newline
+	\indent Let $Y$ be a smooth $S$-scheme, and consider a $K$-morphism $u_K: Y_K \to X_K$.
+We first show that $u_K$ extends to a rational map which is dense in each fiber of $Y$ over $S$.
+We only need to consider the closed points $s \in S$.
+As $Y$ is flat over $S$ (as it is smooth), the codimension of a generic point $\eta$ in the fiber over $s$ is equal the codimension of $s \in S = 1$.
+So $\mc{O}_{Y,\eta}$ is a dimension 1 local ring, and so a discrete valuation ring as $Y$ is regular.
+
 \end{proof}
 
 \subsection{Basic Properties of N\'eron Models}
 
-\begin{proposition}
-	N\'eron models commute with \'etale base change, i.e. if $S' \to S’$ is  \'etale, with $K'$ the ring of rational functions on $S'$, then $X \times_S S'$ is a N\'eron model for $X_K \times_{\text{Spec(K)}} \text{Spec}(K')$. 
+\todo{intro, fill proofs}
+\begin{proposition}\label{etale-basechange}
+	N\'eron models commute with \'etale base change, i.e. if $\alpha: S' \to S’$ is  \'etale, with $K'$ the ring of rational functions on $S'$, then $X_{S'} = X \times_S S'$ is a N\'eron model for $X_{K'} = X_K \times_{\text{Spec(K)}} \text{Spec}(K')$. 
 \end{proposition}
 
 \begin{proof}
-	Basic diagram chasing/properties, TODO.	
+	We wish to show that $X_{S'}$ satisfies the N\'eron mapping property, so let $Y'$ denote a smooth $S'$ scheme and consider a $K'$ morphism $f': Y'_{K'} \to X_{K'}$ which we want to show uniquely lifts. 
+	Note that $Y'$ can be naturally viewed a scheme over $S$ via the map $\alpha: S \to S'$, as $\alpha$ is \'etale (hence smooth) then $Y'$ is also smooth over $S$ (as smooth morphisms are preserved by composition).
+	Now by the N\'eron mapping property for $X$, the $K$-map $Y'_{K'} \to X_{K'} \to X_K$, (the latter morphism the usual projection) lifts to an unique $S$-morphism $Y' \to X$ extending it.
+	Combined with the structure morphism $Y' \to S'$ (which can be viewed as an $S$-morphism) we get a map $f: Y' \to X \times_{S} S' = X_{S'}$ which one can straightforwardly verify extends $f'$.
+	By \Cref{unique-extension}, we have that $X_{S'}$ is a N\'eron model for $X_{K'}$ as claimed.
+	\newline
 \end{proof}
 
-As an example, as open immersions are \'etale, for any open subscheme $S' \subset S$ we have that $X \otimes_S S'$ is a N\'eron model over $S'$.
-So if 
+As an example, as open immersions are \'etale, for any open subscheme $S' \subset S$ we have that $X \otimes_S S'$ is a N\'eron model over $S'$. 
 
-\begin{proposition}
-	Let $s$ be a point of $S$. Then
+We will need to make use of the following lemma.
+\begin{lemma}[EGA IV, 8.8.2]\label{EGA-lemma}
+	Let $s$ be a point of a scheme $S$. Then
 \begin{enumerate}
 	\item If $X,Y$ are $S$-schemes of finite presentation, then the canonical map
 		\[\varinjlim \text{Hom}_{S'}(X \times_S S'. Y \times_S S') \to \text{Hom}_{\mc{O}_{S,s}}(X \otimes_S \mc{O}_{S,s}, Y \otimes_S \mc{O}_{S,s}) \]
@@ -264,9 +428,12 @@ So if
 	Then there is an open neigborhood $S'$ of $s$ in $S$ and an $S'$-scheme $X'$ of finite presentation such that $X \otimes_{S'} \mc{O}_{S,s}$ is isomorphic to $X'$.
 \end{enumerate}
 
-\end{proposition}
+\end{lemma}
 
-\begin{proposition}
+We will not give a proof of the lemma here, but we note it uses finite presentation (finitely many generators and relations) to allows use of the method of "spreading out" from the stalk $\mc{O}_{S,s}$ to a Zariski open containing it. 
+We will use it in the proof of propositions such as the following.
+
+\begin{proposition}\label{lg:closed}
 	Let $S$ be a Dedekind Scheme and $X$ an $S$-scheme of finite type.
 	Then the following are equivalent
 	\begin{enumerate}
@@ -276,8 +443,12 @@ So if
 \end{proposition}
 
 \begin{proof}
-	\cite{BLR}, pg.21, uses an EGA (prev) lemma.
+	We first show that 1. implies 2. and so select any closed point $s \in S$.
+	To show that $X \otimes_S \mc{O}_{S,s}$ is a N\'eron model for its generic fiber (in fact the same as the one for $X$), consider any smooth $\mc{O}_{S,s}$ scheme $Y_s$ and $K$-morphism from its generic fiber $Y_{s,K}$ to $X_K$.
+
 \end{proof}
+
+Thus the existence of a global N\'eron model $X$ gives us the existence of all local N\'eron models $X \otimes \mc{O}_{S,s}$ and furthermore being a N\'eron model for its generic fiber can be checked locally.
 
 \begin{proposition}
 	Let $S$ be a Dedekind scheme with ring of rational functions $K$, and let $X_K$ be a smooth and separated $K$-scheme of finite type.
@@ -289,9 +460,10 @@ So if
 \end{proposition}
 
 \begin{proof}
-	\cite{BLR}, pg.25, also uses EGA Lemma.
-\end{proof}
+	(1) implies (2) using \Cref{etale-basechange} and the fact that open immersions are \'etale and \Cref{lg:closed}.
+	To prove the other direction, for any of the (finitely many) closed points $s_i \in S - S'$, we use \Cref{EGA-lemma} to lift the N\'eron model of $X \otimes \mc{O}_{S,s'}$ to 
 
+\end{proof}
 
 
 \section{Elliptic Curves}
