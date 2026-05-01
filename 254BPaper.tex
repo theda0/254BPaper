@@ -439,17 +439,17 @@ We will use it in the proof of propositions such as the following.
 
 \begin{proof}
 	We first show that 1. implies 2. and so select any closed point $s \in S$.
-	To show that $X \otimes_S \mc{O}_{S,s}$ is a N\'eron model for its generic fiber (in fact the same as the one for $X$), consider any smooth $\mc{O}_{S,s}$ scheme $Y_s$ and $K$-morphism $u_K$ from its generic fiber $Y_{s,K}$ to $X_K$.
+	To show that $X \times_S \mc{O}_{S,s}$ is a N\'eron model for its generic fiber (in fact the same as the one for $X$), consider any smooth $\mc{O}_{S,s}$ scheme $Y_s$ and $K$-morphism $u_K$ from its generic fiber $Y_{s,K}$ to $X_K$.
 	We just want to construct a lift of $u_K$, so we may assume that $Y$ is quasicompact (so finitely presetned over $\mc{O}_{S,s}$), as we may cover $Y$ by such sets (even affine opens), and a lift of $U_K$ along this open cover glues together.
 	Now by \Cref{EGA-lemma}, (2), we can lift $Y_s$ to a scheme $Y_{S'}$ over an open $S' \subset S$ which we can take to be connected, whose fiber over $\mc{O}_{S,s}$ is $Y_s$.
 	As $Y_s$ is smooth over $\mc{O}_{S,s}$, so locally the map is of the form $S'[y_1, \dots, y_m]/(g_1, \dots, g_s) \to \mc{O}_{S,s}[x_1, \dots, x_{n+r}]/(f_1, \dots, f_r)$ where the determinant of the Jacobian matrix of the $f_i$ in $x_1, \dots, x_r$ is invertible. 
 	We can spread to some smaller open of $S'$ where it is smooth (by inverting the finitely many denominators appearing in coefficients of the $f_i, g_i$ and images of $y_i$) so we may assume further that $Y_{S'}$ is smooth over $S'$.
-	By \Cref{etale-basechange} $Y_{S'}$ is a N\'eron model for its generic fiber, which is the same as $Y_{s'}$, thus $u_K$ lifts up to a map $u': Y_{S'} \to X \otimes_S S'$, in which case the map $u' \otimes \mc{O}_{S,s}: Y_{S'} \otimes \mc{O}_{S,s} \to X \otimes \mc{O}_{S.s}$ is a map from $Y_{s'}$ extending $u_K$, so it is a N\'eron model by \Cref{unique-extension}.\newline
-	\indent Conversely, assume that $X \otimes_X \mc{O}_{S,s}$ is a N\'eron model of its generic fiber for all $s$. 
-	Consider any smooth $S$-scheme $Y$ and a map $u_K: Y_K \to X_K$ of the generic fibers. These (perhaps restricting to generic points) are maps of generic fibers of $Y \otimes_S \mc{O}_{S,s} \to X \otimes_S \mc{O}_{S,s}$, so lift to unique extension of $u_K$ for each $s$. By \Cref{EGA-lemma},(a) these lift to maps $Y \otimes_S S' \to X \otimes_S S'$ for some open $S'$ containing $s$. Once again, they can be glued together to give a map $Y \to X$ extending $u_K$ and so $X$ is a N\'eron model for its generic model by \Cref{unique-extension}.
+	By \Cref{etale-basechange} $Y_{S'}$ is a N\'eron model for its generic fiber, which is the same as $Y_{s'}$, thus $u_K$ lifts up to a map $u': Y_{S'} \to X \times_S S'$, in which case the map $u' \times \mc{O}_{S,s}: Y_{S'} \times \mc{O}_{S,s} \to X \times \mc{O}_{S.s}$ is a map from $Y_{s'}$ extending $u_K$, so it is a N\'eron model by \Cref{unique-extension}.\newline
+	\indent Conversely, assume that $X \times_X \mc{O}_{S,s}$ is a N\'eron model of its generic fiber for all $s$. 
+	Consider any smooth $S$-scheme $Y$ and a map $u_K: Y_K \to X_K$ of the generic fibers. These (perhaps restricting to generic points) are maps of generic fibers of $Y \times_S \mc{O}_{S,s} \to X \times_S \mc{O}_{S,s}$, so lift to unique extension of $u_K$ for each $s$. By \Cref{EGA-lemma},(a) these lift to maps $Y \times_S S' \to X \times_S S'$ for some open $S'$ containing $s$. Once again, they can be glued together to give a map $Y \to X$ extending $u_K$ and so $X$ is a N\'eron model for its generic model by \Cref{unique-extension}.
 \end{proof}
 
-Thus the existence of a global N\'eron model $X$ gives us the existence of all local N\'eron models $X \otimes \mc{O}_{S,s}$ and furthermore being a N\'eron model for its generic fiber can be checked locally.
+Thus the existence of a global N\'eron model $X$ gives us the existence of all local N\'eron models $X \times \mc{O}_{S,s}$ and furthermore being a N\'eron model for its generic fiber can be checked locally.
 
 \begin{proposition}
 	Let $S$ be a Dedekind scheme with ring of rational functions $K$, and let $X_K$ be a smooth and separated $K$-scheme of finite type.
@@ -463,8 +463,8 @@ Thus the existence of a global N\'eron model $X$ gives us the existence of all l
 \begin{proof}
 	(1) implies (2) using \Cref{etale-basechange} and the fact that open immersions are \'etale and \Cref{lg:closed}.
 	To prove the other direction, consider a smooth $S$-scheme $Y$ and $u_K: Y_K \to X_K$ a $K$-morphism of their generic fibers. 
-	Now $u_K$ (up to perhaps restriction to generic point) are the maps of generic points on the $X_{S'} \colonequals X \otimes_S S'$ and $X \otimes_S \mc{O}_{S,s}$ so by the N\'eron mapping property have unique extensions of $u_K$.
-	Consider any $s \in S - S'$, by \Cref{EGA-lemma},(a), the lift $Y \otimes_S \mc{O}_{S,s} \to X_{\otimes}_S \mc{O}_{S,s}$ lifts to a map $Y \otimes_S U \to X \otimes_S U$ for an open $U \supset s$.
+	Now $u_K$ (up to perhaps restriction to generic point) are the maps of generic points on the $X_{S'} \colonequals X \times_S S'$ and $X \times_S \mc{O}_{S,s}$ so by the N\'eron mapping property have unique extensions of $u_K$.
+	Consider any $s \in S - S'$, by \Cref{EGA-lemma},(a), the lift $Y \times_S \mc{O}_{S,s} \to X \times_S \mc{O}_{S,s}$ lifts to a map $Y \times_S U \to X \times_S U$ for an open $U \supset s$.
 	Now these maps can be glued together on opens in $Y$, and so define a global lift of $u_K$ from $Y \to X$, hence $X$ is N\'eron model for its generic fiber as claimed.
 \end{proof}
 
