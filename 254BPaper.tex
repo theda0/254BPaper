@@ -186,19 +186,26 @@ We define one nice example of such a lift through Arithmetic surfaces; N\'eron m
 	An \textit{arithmetic surface} (over $R$) is an integral, normal, excellent scheme that is flat and finite type over $\text{Spec}(R)$ whose generic fiber is isomorphic to $C/K$ and whose special fibers are unions of curves.
 \end{definition}
 
+\begin{remark}
+	Note that an arithmetic surface has dimension 2 (it is flat over $R$ with special fibers of pure dimension 1). 
+	While its generic fiber is by definition regular, this need not be true for the special fibers, which may be singular.
+	We will be interested in arithmetic surfaces which satisfy properties such as smoothness and properness.
+\end{remark}
 
 \begin{example}
-$\mb{P}^1_R$  perhaps?
+	$\mb{P}^1_R$ for $R$ a Dedekind domain is a proper and smooth arithmetic surface for its generic fiber $\mb{P}^1_K$.
+	Its special fibers are of the form $\mb{P}^1_k$ for the residue fields $k$ of the closed points of $\text{Spec}(R)$.
 \end{example}
 
 \begin{proposition}
 	Let $\pi: C \to \text{Spec}(R)$ be a regular arithmetic surface, and let $\mk{p} \in \text{Spec}(R)$.
+	Denote $C_{\mk{p}} = C \times_{\text{Spec}(R)} \text{Spec}(R/\mk{p})$ the corresponding special fiber of $C$.
 	Then
 \begin{enumerate}
 	\item Let $x \in C_{\mk{p}} \subset C$ a closed point on a fiber of $C$ over $\mk{p}$.
 		Denote $\pi^*: R_{\mk{p}} \to \mc{O}_{C,x}$ the map of stalks induced by $\pi$ and $\mk{m}_{C,x}$ the maximal ideal of $\mc{O}_{C,s}$.
 		Then 
-		\[\text{$C_{\mk{p}}$ is non-singular at $x$} \Longleftrightarrow \pi^*(\mk{p}) \subsetneq \mk{m}^2_{C,x}\]
+		\[\text{$C_{\mk{p}}$ is regular at $x$} \Longleftrightarrow \pi^*(\mk{p}) \subsetneq \mk{m}^2_{C,x}\]
 	\item Let $P \in C(R)$, then $C_{\mk{p}}$ is non-singular at $P(\mk{p})$. 
 \end{enumerate}
 
@@ -206,7 +213,14 @@ $\mb{P}^1_R$  perhaps?
 
 
 \begin{proof}
-	\cite{AEC2}, pg.327
+	To prove (1), note that $x$ viewed in $C$ is of codimension 2, as $C$ is regular by assumption the cotangent space $\mk{m}_{C,x}/\mk{m}^2_{C,x}$ has dimension 2.
+	Now $x$ viewed in $C_{\mk{p}}$ is of codimension 1, so $x$ is regular in $C_{\mk{p}}$ if and only if the dimension of its cotangent space is equal to 1.
+	However since
+	\[\mk{m}_{C_{\mk{p}},x}/\mk{m}^2_{C_{\mk{p}},x} = \mk{m}_{C,x}/(\mk{m}^2_{C,x} + \pi^*(\mk{p}))\]
+	then the codimension of of $ \mk{m}_{C,x}/(\mk{m}^2_{C,x} + \pi^*(\mk{p}))$ will be cut down by one if and only if $\pi^*(\mk{p}) \notin \mk{m}^2_{C,x}$, which as we discussed is equivalent to $C_{\mk{p}}$ being regular at $x$.\newline
+	\indent To prove (2), since $P \in C(R)$ are sections, i.e. maps $f: \text{Spec}(R) \to C$ such that post-composition with the structure morphism $C \to \text{Spec}(R)$ is the identity, the same is true for the maps of stalks $R_{\mk{p}} \to \mc{O}_{C,x} \to R_{\mk{p}}$.
+	Then $\pi^*(\mk{p})$ cannot lie in $\mk{m}^2_{C,x}$ as otherwise its image of $\mk{p}$ in $R_{\mk{p}}$ under the mentioned map of stalks would lie in $\mk{p}^2$, contradicting the fact it must be the identity.
+	Hence the point $P(\mk{p}) \in C$ is regular in the fiber $C_{\mk{p}}$ by (1) as claimed.
 \end{proof}
 
 \begin{proposition}
@@ -218,13 +232,24 @@ $\mb{P}^1_R$  perhaps?
 		Then 
 		\[X(R) = X^0(R)\]
 \end{enumerate}
-
+Thus if $X$ is proper and regular over $\text{Spec}(R)$ then
+\[C(K) = X(R) = X^0(R)\]
 \begin{proof}
-	\cite{AEC2}, pg.327
+	To prove (1), note that $R$-morphisms from $\text{Spec}(K)$ to $X$ are in bijection with $K$-morphisms to $C$, (just from the universal property of the fiber product of $C$ over $\text{Spec}(K)$), and applying the valuative criterion for properness to the below diagram
+\[\begin{tikzcd}
+	{\text{Spec}(K)} & X \\
+	{\text{Spec}(R)} & {\text{Spec}(R)}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow["{\text{id}}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+tells us there is a unique $R$-point of $X$ for each $K$-point of $C$ as we wanted.
 \end{proof}
 
 \end{proposition}
 
+We now give the existence 
 \begin{theorem}[Minimal Proper Regular Models (Abhyankar, Lipman, Lichtenbaum, Shafarevich)]\label{min-as}
 	Let $C/K$ be a non-singular projective curve of genus $g$.
 	Then there exists a proper, regular arithmetic over $R$ with generic fiber isomorphic to $C/K$ which we call proper regular models for $C/K$.
