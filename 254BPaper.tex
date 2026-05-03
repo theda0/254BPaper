@@ -176,6 +176,7 @@ Similarly, we can define the "translation by $x$" map, for $x$ an $X$-point of
 
 \subsection{Arithmetic Surfaces}
 
+Throughout the rest of the paper, we will assume the residue fields of our base schemes are always perfect.
 Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over a scheme $S$ with function field $K$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we will call \textit{$S$-models} of $X$.  
 We define one nice example of such a lift through Arithmetic surfaces; N\'eron models will also be such objects as we will later encounter.
 
@@ -197,6 +198,22 @@ We define one nice example of such a lift through Arithmetic surfaces; N\'eron m
 	Its special fibers are of the form $\mb{P}^1_k$ for the residue fields $k$ of the closed points of $\text{Spec}(R)$.
 \end{example}
 
+We mention now an useful way of thinking about smoothness of arithmetic surfaces over $\text{Spec}(R)$, being equivalent to all the fibers being regular over their corresponding residue fields.
+This is due to the following lemma we leave here without proof.
+
+\begin{proposition}[\cite{BLR}, 2.4, Proposition 8]\label{smoothness-lemma}
+	Suppose $f: X \to S$ is locally of finite presentation. 
+	Let $x$ a point of $X$, and denote $f(x)$ as $s$.
+	Then the following are equivalent.
+\begin{enumerate}
+	\item $f$ is smooth at $x$
+	\item $f$ is flat at $x$ and the fiber $X_s = X \times_X k(s)$ is smooth over $k(s)$ at $x$.
+\end{enumerate}
+
+\end{proposition}
+
+
+We now give an useful criterion for determining regularity of closed points along special fibers.
 \begin{proposition}
 	Let $\pi: C \to \text{Spec}(R)$ be a regular arithmetic surface, and let $\mk{p} \in \text{Spec}(R)$.
 	Denote $C_{\mk{p}} = C \times_{\text{Spec}(R)} \text{Spec}(R/\mk{p})$ the corresponding special fiber of $C$.
@@ -223,7 +240,7 @@ We define one nice example of such a lift through Arithmetic surfaces; N\'eron m
 	Hence the point $P(\mk{p}) \in C$ is regular in the fiber $C_{\mk{p}}$ by (1) as claimed.
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{proper-regular-prop}
 	Let $X/\text{Spec}(R)$ be an arithmetic surface, and $C/K$ its generic fiber.
 \begin{enumerate}
 	\item if $C$ is proper over $\text{Spec}(R)$, then 
@@ -249,14 +266,33 @@ tells us there is a unique $R$-point of $X$ for each $K$-point of $C$ as we want
 
 \end{proposition}
 
-We now give the existence 
+We now give (without proof) theorems of Abhyankar, Lipman, Lichtenbaum, and Shafarevich which gives us the existence of proper and regular arithmetic surfaces for non-singular projective curves, when the genus of this curve $\geq 1$ we further have minimal such ones (i.e. satisfying an universal property).
+We mention that to get from a proper, regular model to a minimal one, we show we can "blow down" any exceptional divisors on the special fibers and that a model with no exceptional divisors is minimal in our sense.
+
 \begin{theorem}[Minimal Proper Regular Models (Abhyankar, Lipman, Lichtenbaum, Shafarevich)]\label{min-as}
-	Let $C/K$ be a non-singular projective curve of genus $g$.
-	Then there exists a proper, regular arithmetic over $R$ with generic fiber isomorphic to $C/K$ which we call proper regular models for $C/K$.
-	Furthermore, if $g \geq 1$, then there exists a minimal proper regular model $C^{min}/K$ satisfying the following minimality property: \newline
-	\indent \textbf{Let $C'/R$ be any other proper regular model for $C/K$. Then any $R$-birational map $C' \to C^{min}$ inducing an isomorphism on the generic fiber is an $R$-isomorphism.} 
+	Let $R$ a Dedekind domain with fraction field $K$ and  $C/K$ be a non-singular projective curve of genus $g$.
+\begin{enumerate}
+	\item  There exists a proper, regular arithmetic curve over $\text{Spec}(R)$ with generic fiber isomorphic to $C/K$, which we call a proper regular model for $C/K$.
+	\item Assume $g \geq 1$.
+		There exists a proper regular model for $C/K$ satisfying the following minimality property: \newline
+	\indent \textbf{Let $C'/R$ be any other proper regular model for $C/K$. Then any $R$-birational map $C' \to C^{min}$ is an $R$-isomorphism.} 
+
+\end{enumerate}	
 \end{theorem}
 
+\begin{proposition}
+	Let $R$ be a Dedekind domain with fraction field $K$ and $C/\text{Spec}(K)$ a regular projective curve of genus $\geq 1$.
+	Let $X/\text{Spec}(R)$ be a minimal proper regular model for $C/K$ and denote $X^0$ the largest subscheme of $C$ which is smooth over $R$.
+	Then every $K$-automorphism $f: C \to C$ of the generic fiber of $X$ extends to $R$-automorphisms 
+	\[g: X \to X, \quad \quad  g': X^0 \to X^0\]
+\end{proposition}
+
+\begin{proof}
+	We first note that any $K$-morphism of generic fibers extend to a rational $R$-morphisms $f: X \to X$ due to a future lemma (\Cref{EGA-lemma}, (a)) which is in fact birational as one can show the generic fibers is dense in $X$.
+	The minimality property given in the above theorem gives us that $f$ can be extended to an $R$-isomorphism $X \to X$.
+	To show that $f$ can be restricted to the open subscheme $X^0$, note that for any $x \in X^0$ and smooth open neighborhood $x \in U$ containing it that $f(U)$ is smooth as it is an isomorphism, hence $f(X^0) \subset X^0$.
+	The same argument also applies to $f^{-1}$ giving us the reverse inclusion and hence $f$ restricts to an $R$-isomorphism $X^0 \to X^0$ as we wanted.
+\end{proof}
 
 \section{N\'eron Models}
 
@@ -406,7 +442,7 @@ Thus $Z$ is defined in codimension 1 and so extends everywhere.
 		In light of the previous remark that $S$-group schemes separated and the previous proposotion which gives us that rational maps $X_K \to E$ are defined everywhere, we see that the two definitions are equivalent. 
 \end{remark}
 
-\begin{proposition}\label{Abelian-schemes-are-NM}
+\begin{proposition}\label{prop:3.7}
 	Let $X$ be a proper and smooth $S$-group scheme with connected fibers. 
 	Then $X$ is a N\'eron model of its generic fiber $X_K$.
 \end{proposition}
@@ -513,24 +549,24 @@ In fact, note that $X$ is still projective, so satisfies the property that $K$-p
 
 
 An elliptic curve $E/K$ is a projective curve, so as mentioned in the discussion above there are projective $\text{Spec}(R)$-models for $E$ which are potential candidates for N\'eron models.
-In this section we will show that in the case when $E$ has good reduction the N\'eron mdoel can be recovered this way.
+In this section we will show that in the case when $E$ has good reduction the N\'eron mdoel can be recovered this way. 
 However, more work will need to be done when there is bad reduction.
+In these cases, note that the special fibers given by the same Weierstrass equation may be singular, in which case they have exactly one-singular point (see \cite{AEC1}, III, Proposition 1.4).
 
-\indent First 
+\subsection{Good Reduction}
 
-
-\begin{theorem}
-	Let $E/K$ an elliptic curve.
-	Choose a Weierstrass equation 
+\begin{theorem}\label{theo:4.1}
+	Let $R$ be a discrete valuation ring, and $K$ its fraciton field. 
+	Let $E/K$ an elliptic curve and choose a Weierstrass equation 
 	\[y^2z + a_1xyz + a_3yz^2 = x^3 + a_2x^2z + a_4xz^2 + a_6z^3\]
 	with coefficients in $R$ which defines a projective subscheme of $W \subset \mb{P}^2_R$.
 	Let $W^0$ be the largest open subscheme of $W$ which is smooth over $R$. 
 	Then 
 \begin{enumerate}
 	\item Both $W/R$ and $W^0/R$ have generic fiber $E/K$.
-	\item The natural map $W(R) \to E(K)$ is a bijetion. 
+	\item The natural map $W(R) \to E(K)$ is a bijection. 
 		Furthermore, if $R$ is regular then the natural map $W^0(R) \to W(R)$ is also also a  bijection.
-	\indent The addition and negation maps on $E$ extend to $R-$morphisms
+	\item The addition and negation maps on $E$ extend to $R-$morphisms
 	\[W^0(R) \times W^0(R) \to W^0(R), \quad \quad W^0(R) \to W^0(R) \]
 	which make $W^0$ into a group scheme over $R$.
 \end{enumerate}
@@ -538,11 +574,30 @@ However, more work will need to be done when there is bad reduction.
 \end{theorem}
 
 \begin{proof}
-	Uses 4.4(a), (b) from \cite{AEC2}, pg.329. 
+	To prove (1), note that 
+	\[W/R = \text{Proj}(R[x,y,z]/y^2z + a_1xyz + a_3yz^2 - x^3 - a_2x^2z - a_4xz^2 - a_6z^3)\]
+	the generic fiber upon base-changing is given in $\mb{P}^2_K$ by the same equation which is $E/K$.
+	In the case of bad reduction, the smooth subscheme is obtained by removing the singular points of the special fiber (\Cref{smoothness-lemma}), which as noted is a closed point of the special fiber in which case the generic fiber remains the same.\newline
+	\indent For (2), note that $W$ is a projective scheme hence it is proper.
+	Then the first part of \Cref{proper-regular-prop} gives us that $E(K) = W(R)$ and assuming that $W$ is regular, and the second part gives us a bijection $W^0(R) \to W(R) \to E(K)$. \newline
+	\indent We will only outline the proof for (3), note that since $R$ is a discrete valuation ring, the generic point is open in $\text{Spec}(R)$ so the generic fiber is a dense open subscheme of $W$.
+	Thus the multiplication maps and inversion maps  $\mu: E \times_K E \to E$ and $i: E \to E$ define rational maps $\mu': W \times_R W \dashrightarrow W$ and $i': W \dashrightarrow W$.
+	It thus suffices to show that $\mu$ is a morphism on $W^0 \times_R W^0$ and $i$ is a morphism on $W$. \newline
+	\indent The idea is to use the rational equations defining the group law (see \cite{AEC1}, III.2) on the generic fiber and show they are well-defined on our larger open sets.
+	For simplicity, we assume that the characteristic of the field are not 2 or 3 so as to simplify the equations in which case we take $W$ to be defined as 
+	\[W = \text{Proj}(R[x,y,z]/(y^2z - x^3 - axz^2 - bz^3))\]
+	but one could do the same for the (more complicated) equations in general characteristic.
+	Note the negation map is given by $i: W \dashrightarrow W$ sending $x,y,z$ to $x,-y,z$ respectively.
+	The induced map is in fact defined on all of $W$ as the the irrelevant ideal (the ideal generated by $x,y,z$) maps to itself (see \cite{FOAG}, 7.4.A).
+So all that remains is to consider the multiplication map $u$.	
+In fact, one can show that if $W$ is smooth over $R$ then $\mu$ is a moprhism on all of $W \times_R W$ and if it isn't smooth, then for $\gamma$ the singular point of the special fiber it is smooth except at the closed subscheme $\gamma \times \gamma \subset W \times_R W$.
+We first denote $W_{aff} = D(z)$ be the corresponding affine of $W$.
+Now the formula [\cite{AEC1}, III.2.3] is given by the induced map on by the coordinates 
+	\todo{fill in proof outline}
 \end{proof}
 
 \begin{theorem}
-	Let $E/K$ an elliptic curve.
+	Let $R$ be a Dedekind domain with fraction field $K$ and let $E/K$ an elliptic curve.
 	Choose a Weierstrass equation 
 	\[y^2z + a_1xyz + a_3yz^2 = x^3 + a_2x^2z + a_4xz^2 + a_6z^3\]
 	with coefficients in $R$ which defines a projective subscheme of $W \subset \mb{P}^2_R$.
@@ -550,10 +605,16 @@ However, more work will need to be done when there is bad reduction.
 \end{theorem}
 
 \begin{proof}
-	Previous theorem says it extends to a groups cheme, now use Proposition 3.5..
+	By \Cref{lg:closed}, it suffices to show that $W \times_{\text{Spec}(r)} R_{\mk{p}}$ is a N\'eron model for $E/K$ for each prime $\mk{p}$ of $R$.
+	Now $R_{\mk{p}}$ is a discrete valuation ring as $R$ is a Dedekind domain, and $W \times_{\text{Spec}(r)} R_{\mk{p}}$ is the projective subscheme of $\mb{P}^2_{R_{\mk{p}}}$ given by the same defining equation, so by \Cref{theo:4.1} there is group scheme structure on $W^0$, which is equal to $W$ under the assumption that $W$ has good reduction, in which case \Cref{prop:3.7} gives us $W \times_{\text{Spec}(r)} R_{\mk{p}}$  is a N'eron model as claimed.
 \end{proof}
 
-\subsection{The Local Case}
+\subsection{Bad Reduction}
+
+We have just in the case when the elliptic curve has good reduction over all primes of $R$, that the corresponding projective curve in $\mb{P}^2_R$ gives us the N'eron model.
+The case when there is bad reduction is not as straightforward: we will need to appeal to minimal proper regulars, and first show it in the local case for the strict henselization of a local ring.
+Afterwards, we descend to the general discrete valuation case, and using our results for the good reduction case, we can "glue" together our N\'eron models at the bad primes to form our N\'eron model over an Dedekind domain.
+With this, we introduce an important notion for this section.
 
 \begin{definition}[(Strictly) Henselian Local Rings]
 	A discrete valuation ring $R$ is called \textit{Henselian} if it satisfies Hensel's lemma.
@@ -562,6 +623,14 @@ However, more work will need to be done when there is bad reduction.
 	there exists a unique element lift of $a$ to  a $\alpha \in R$ such that $f(\alpha) = 0$.
 	Furthermore, if $R$ has separably closed residue field it is called \textit{strictly Henselian}.
 \end{definition}
+
+\begin{example}
+	As an example, for $R$ a discrete valuation ring, its completion with respect to its maximal ideal $\mk{m}$ is henselian. 
+	In mixed characteristic we have the completion of $Z_{(p)} = \{ \frac{a}{b} \in \Q \,|\, p \nmid b\}$ (the stalks of $\text{Spec}(\Z)$) for $p$ prime are the p-adic integers $\Z_p$ are Henselian; more generally for number fields we get their corresponding local fields.
+	In the case of same characteristic, completions of local rings at a smooth point of a curve over $k$ are the power series ring $k[[t]]$.
+\end{example}
+
+We won't work with the above completions as they may be "too large" in the sense that they won't always be flat over $R$, which we will later on need.
 
 \begin{proposition}
 	Let $(R, \mk{m}, k)$ be a discrete valuation ring. 
@@ -581,7 +650,7 @@ However, more work will need to be done when there is bad reduction.
 	Denoting $K^s$ the separable closure and $R^s$ the integral closure of $R$ in $K^s$. 
 	Let $\mk{p}$ be an ideal lying above $\mk{m}$ and $D$ and $I$ the corresponding decomposition and inertia groups.
 	\begin{enumerate}
-		\item Let $R^s(D)$ denote the subring of $R^s$ fixed by $D$ and define $R^h$ the lcoalization of $R^s(D)$ at the maximal ideal $\mk{p} \ic R^s(D)$.
+		\item Let $R^s(D)$ denote the subring of $R^s$ fixed by $D$ and define $R^h$ the localization of $R^s(D)$ at the maximal ideal $\mk{p} \ic R^s(D)$.
 		Then $R^h$ is Henselian and is called the \textit{Henselization} of $R$.
 	\item Let $R^s(I)$ denote the subring of $R^{s}$ fixed by $D$ and define $R^{sh}$ the lcoalization of $R^s(I)$ at the maximal ideal $\mk{p} \ic R^s(I)$.
 		Then $R^{sh}$ is Henselian and is called the \textit{strict Henselization} of $R$.
@@ -589,16 +658,32 @@ However, more work will need to be done when there is bad reduction.
 	
 \end{proposition}
 
-\subsection{The Global Case}
+\begin{remark}
+	There are other equivalent definitions for the (strict) henselization of a discrete valuation ring.
+
+\end{remark}
 
 \begin{theorem}
 	Let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
-	Then $X^0/R$ is a N\'eron model for $E/K$/
+	Then $X^0/R$ is a N\'eron model for $E/K$.
 \end{theorem}
 
-\begin{proof}
-	
-\end{proof}
+The proof is a bit long and involved, and we will sketch various parts of it. 
+We first give the definition of a normal group law, 
+
+\begin{definition}
+	For $R$ a Dedekind domain, and $X/R$ a smooth $R$-scheme with non-empty fibers, let 
+	\[\mu: X \times_R X \dashrightarrow X\]
+be a rational map defined over $R$.
+Then $\mu$ is called a \textit{normal law on X} if it satisfies the two following conditions.
+\begin{enumerate}
+	\item The map $\mu$ is associative, i.e. we have wherever both sides are defined below that
+		\[\mu(\mu(x,y),z) = \mu(x, \mu(y,z))\]
+    \item 
+\end{enumerate}
+
+\end{definition}
+
 
 
 \section{Sample Computations of N\'eron Models}
