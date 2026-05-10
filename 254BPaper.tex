@@ -908,60 +908,89 @@ Again, the construction of the minimal proper regular model as having no excepti
 \section{Descriptions of N\'eron Models for Elliptic Curves}
 
 
+While we already have a good explicit description when there is good reduction everywhere in \Cref{theo:3.2}.
+However, when there is bad reduction, chasing through the proof of \Cref{main-theorem} for the existence of N\'eron models for elliptic curves in general seems to require finding the minimal proper, regular model over a strict henselization of the local ring at a bad prime, descending our N\'eron model to the original local ring, before spreading out this N\'eron model and gluing it.\newline
 
-In this section we discuss 
-
+\indent One may first see if we can get a good grasp of the minimal models.
+In this section we mention some facts about the special fibers of the minimal proper before giving an example calculation where we describe the N\'eron model for an elliptic curve over $\text{Spec}(\Z)$, where we see that we may sometimes ignore much of the otherwise seemingly hard mentioned parts.
 
 \subsection{Special Fibers of Minimal Models}
 
-[\cite{AEC2}, IV, Theorem 8.2]
+We remark here that there is for discrete valuation rings with algebraically closed residue field, that there is a classification of the special fibers the minimal proper regular model $X$ over an elliptic curve $E$.
+There are a total of 11 types, which we won't have space to list out, but we note that 2 of them are actually an infinite family of such special fibers.
+The proof involves defining an intersection pairing on a restricted divisor group on the $X$; one finds some necessary relations, which constrains what special fibers may appear.
+One may consult ([\cite{AEC2}, IV, Section 8]) for more details about this. \newline
 
-\begin{theorem}[Kodaira, N\'eron]	
-Let $(R, \mk{m}, k)$ be a discrete valuation ring with fraction field $K$, and assume $k = \overline{k}$ is algebraically closed.
-	Let $E/K$ be an elliptic curve, and $C/R$ the minimal proper regular model for $E$.
-	Then the special fiber $C_{\mk{m}}$ has one of the following forms.
+\indent There is also an algorithm of Tate, this time over any discrete valuation ring $R$, which given just the Weierstrass equation computes, among other thiings, the reduction type of the special fiber (the classification of the special fiber upon base-change to the strict henselization).
+With a description of the special fiber, one obtains a description of the smooth locus of the minimal proper regular model (which simply involves discarding the singular parts of the special fiber, i.e. those components with multiplicity $> 1$ and intersection points of components).
+The proof of Tate's algorithm involves constructing a proper regular model via blow-ups, though the algorithm itself is relatively simple (though long and potentially computationally heavy).
+We list one important consequence, see ([\cite{AEC2}, IV, Section 9]) for more details.
 
-\end{theorem}
-
-
-[\cite{AEC2}, IV, Proposition 8.1]
 \begin{proposition}
-	Let $(R, \mk{m}, k)$ be a discrete valuation ring with fraction field $K$, and assume $k = \overline{k}$ is algebraically closed.
-	Let $E/K$ be an elliptic curve, and $C/R$ the minimal proper regular model for $E$.
-	Suppose that the special fiber of $C$ contains r irreducible components $F_1, \dots, F_r$ and write the special fiber
-	\[C_{\mk{m}} = \sum_{i=1}^r n_i F_i\]
-	where $n_i$ denotes the multiplicity of the component $F_i$ in $C_{\mk{m}}$.
-	Then 
-\begin{enumerate}
-	\item At least one of the $n_i$'s is equal to 1.
-	\item Let $K_C$ be a canonical divisor on $C$. Then
-		\[K_C \cdot F = 0 \text{ for all fibral divisors $F \in \text{Div}_{\mk{m}}(C)$}\]
-	\item If $r = 1$, then $F_1^2 = 0$ and $p_a(F_1) = 1$ where $p_a$ denotes the (arithmetic) genus.
-	\item Suppose that $r \geq 2$. Then for each $1 \leq i \leq r$, we have 
-		\[F_i^2 = -1, \quad F_i \cong \mb{P}_k^1, \quad \text{and} \quad \sum_{1 \leq j \leq r, j \neq i} n_j F_j \cdot F_i = 2n_i\]
-\end{enumerate}
-
-
-
+	Tkae a minimal Weierstrass equation for $E/K$ and let $W \subset \mb{P}^2_R$ be the closed subscheme defiend by this equation, and denote $W^0$ the largest subscheme smooth over $R$.
+	Then $W^0$ is the identity component of the N\'eron model.
 \end{proposition}
 
+Here the identity component consists of those components in the image of the unit section from $\text{Spec}(R)$. 
+Hence the projective subscheme from the Weierstrass equation gives us almost all the N\'eron model including parts at the bad primes; all we need to do is adjoin extra components at the fibers over the bad primes. 
+\newline
 
+\indent However, in spite of \Cref{main-theorem}, one does not need to explicitly calculate the minimal proper regular model.
+Still in the case when $R$ is a strict henselian discrete valuation ring, we have [\cite{BLR}, 1.5, Lemma 5].
 
-\subsection{Explicit Calculations}
-
-
-[\cite{BLR}, 1.5, Lemma 5]
-\begin{proposition}
-	Let $E_K$ be an elliptic curve, $E^0$ the correspondign projective subscheme defined by a minimal Weierstrass equation for $E_K$, and $E^1, \dots, E^r$ be smooth and separated $R$-models of $E$.
+\begin{proposition}\label{prop:4.2}
+	Let $R$ be a strictly henselian discrete valuation ring with field of fractions $K$.
+	Let $E$ be an elliptic curve over $K$, $E^0$ the corresponding projective subscheme defined by a minimal Weierstrass equation for $E$, and $E^1, \dots, E^r$ be smooth and separated $R$-models of $E$.
 Assume that for all $k$ that the special fiber $E_k^i$ is isomorphic to $E^0_k$ as a $k$-scheme. 
 Furthermore, assume that the invariant differential $\omega = \frac{dx}{y}$ has $\pi$-order 0 over all $E^i_k$ and that the canonical map $\coprod_{k=0}^r E^i(R) \to E_K(K)$ is bijective.
-Then gluing the $E^i$ along the generic fiber $E_K$, we obtain the N'eron model $E$ of $E_K$.
+Then gluing the $E^i$ along the generic fiber $E_K$, we obtain the N\'eron model $E$ of $E_K$.
 Furthermore, $E^0$ is the identity component of $E$.
 \end{proposition}
 
-\begin{proof}
-	We only outline the proof, the idea is that
-\end{proof}
+So at least in the elliptic curve case, over a strict henselian ring $R$, to construct the N\'eron model we simply need to glue similar looking schemes in such a way such that the unique extension from $K$-points to $R$-points hold.
+The above proposition also allows one to explicitly describe the N\'eron model.
+Indeed, supposing for sake of contradiction that the  characteristic of the residue field $k$ is not 2 or 3, in which case we may suppose that $E$ is defined by the equation
+\[y^2z = x^3 + \beta xz^2 + \gamma z^3\]
+Up to a change of coordinates $(x,y,z) \to (\pi^{-2n}x, \pi^{-3n}y, z)$ for $\pi$ an uniformizer of $R$ there exists a minimal such equation with coordinates in $R$.
+Then the possibilities depend on the valuation of the discriminant $\Delta$ and $j$-invariant $j$ for $E$.  \newline
+
+
+\textit{Special Case:}\label{special-case} Here, we will consider one case described in \cite{BLR}, section 1.5, when $v(j) = -2$ and $v(\Delta) = 2$.
+One can show as in \cite{BLR}, 1.5 Lemma 3 or directly from the equations that in this case $v(\beta) = v(\gamma) = 0$, in which case there is multiplicative reduction of $E$, i.e. the $E^0_k \cong \mb{G}_{m,k}$.
+Denote
+\[P(x) = x^3 + \beta x + \gamma\]
+and $\overline{P}(x)$ the reduction mod the maximal ideal of $R$.
+Then $\overline{P}(x)$ has a double root $\overline{b}$ and another root $\overline{a}$ (no triple root s the the reduction $\overline{\beta} \neq 0$ from its valuation).
+Then $(\overline{b}, 0)$ is the singular point of $\overline{E}_k$, in which case the $K$-points of $E$ not lifting to $R$-points of $E^0$ are exactly those which reduce to $(\overline{b}, 0)$.
+\newline
+Denote $a$ a lift of $\overline{a}$ (using the fact $R$ is henselian), and denote $b_1, b_2$ lifts of $\overline{b}$ in $\overline{K}$.
+Then the $K$-points of $E$ that don't  will be of the form $(\pi r_1 + b_1, \pi r_2)$ for $r_1, r_2 \in R$.
+Then we use the new variables 
+\begin{equation}\label{coc}
+\pi x_1 + b_1 = x , \quad \pi y_1 = y
+\end{equation}
+Then this transforms the $K$-points $(\pi r_1 + b_1, \pi r_2) \to (r_1, r_2)$.
+In fact, since we assumed that $v(\Delta) = 2$, one can show that $(r_1, r_2)$ TO FILL.
+Indeed, $\Delta = 4\beta^3 + 27 \gamma^2$ is the traditional discriminant of a cubic, it is the product of all pairs of unequal roots of $P(x)$.
+Denote $a,b'$ lifts of $a$ and
+By assumption $a$ and $b$ are unequal in $k$, thus the valuation of $\Delta$ is $2v(b - b')$, hence $v(b - b') = 1$.
+Plugging in $x = \pi r_1 + b_1$ we see that this implies $v(r_1) = 0$.
+More precisely, with the change of coordinates as in \ref{coc}, we note it transforms the affine $\text{Spec}(R[x,y]/(y^2 - (x - a)(x-b_1)(x-b_2))$ as 
+\begin{align*}
+	\text{Spec}(R[x_1,y_1]/( (\pi y_1)^2 - (\pi x_1 - a + b_1)(\pi x)(\pi x-b_2 + b_1))
+\end{align*}
+In other words, we glue 
+\[X_1 = \text{Spec}(R[x_1, y_1]/(y_1^2  - (\pi x_1 - a + b_1)(x)(x - \frac{b_2 - b_1}{\pi}))\]
+to $X_2 = \text{Proj}(R[x,y,z]/(y^2z - x^3 - \beta x z^2 - \gamma z^3))$ where we identify the special fiber of $X_1 = \text{Spec}(K[x_1, y_1]/(y_1^2  - (\pi x_1 - a + b_1)(x)(x - \frac{b_2 - b_1}{\pi}))$ with the affine open of $\text{Spec}(K[x, y]/(y^2 - x^3 - \beta x - \gamma))$ of $X_2$ via the change of coordinates in \ref{coc}.
+By construction every $K$-point lifts to either one in $X_1$ or $X_2$ and the other conditions of \Cref{prop:4.2} are straightforwardly verified, giving us the N\'eron model. 
+\indent 
+
+For a more detailed discussion for which we do not have the space to include, see \cite{BLR}, Section 1.5.
+
+\subsection{An Explicit Calculation}
+
+
+
 
 Throughout this section $\Z_{(a)}$ is $\text{Spec}(\Z)$ localized at $a$, corresponding to the open subscheme of $\text{Spec}(\Z)$ with complement those primes dividing $a$.
 We now give an explicit description of the N\'eron model over $\text{Spec}(\Z)$ for the elliptic curve defined by the Weierstrass equation
@@ -982,16 +1011,32 @@ As we see that for both $p = 5,29$ that $v_p(j) < 0$ and $v_p(\Delta) = 2$, we m
 Beforehand, we note that we have the factorization 
 \[P(x) \colonequals x^3 +37x + 438 = (x+6)(x - (3 + 8i))(x - (3 - 8i))\]
 
-\noindent \textbf{p = 5:} Denote $R_5$ the strict henselization of the stalk $Z_5 = \{ \frac{a}{b} \in \Q| 5 \nmid b\}$.
+\noindent \textbf{p = 5:} Denote $R_5^{sh}$ the strict henselization of $R_5 = \{ \frac{a}{b} \in \Q| 5 \nmid b\}$ the stalk $\text{Spec}(\Z)$ at $(5)$. 
 The reduction of $P(x)$ mod the maximal ideal of $R_5$ is simply taking it mod 5, so 
 \[\overline{P}(x) = x^3 +2x +3 = (x-4)^2(x-2)\]
-where the root -6 reduces to 3 mod 5, and denoting $i = 3$ the solution to $x^2 + 1 = 0$ we see the roots $3 \pm 8i$ are 2,4 mod 5.
+where the root -6 reduces to 4 mod 5, and denoting $i = 3$ the solution to $x^2 + 1 = 0$ we see the roots $3 \pm 8i$ are 2,4 mod 5.
 Thus the singular point of the reduction of $E$ mod 5 is at (4,0).
-We may lift the solution of 3 to $x^2 + 1$ from the residue field $\overline{\mb{F}}_5$ to $R_5$ as it is henselian, which we denote as $i$.
+As in the Special Case, \ref{special-case}, we choose a lift of $4$, for which we choose -6.
+Denoting 
 
- 
+\[X_5^1 =  \text{Proj}(R_5^{sh}[x,y,z]/(y^2z - x^3 -37xz^2 - 438z^3))\]
+\[X_5^2 = \text{Spec}(R_5^{sh}[x_1,y_1]/(y_1^2 - (x_1)(x_1 - \frac{9+5i}{5})(5x_1 - (9-8i))) = \text{Spec}(R_5^{sh}[x_1,y_1]/(y_1^2 - 5x_1^3 +18x_1^2 -29x_1)\]
+ the N\'eron model of $E$ over $R_5^{sh}$ is $X_5^1$ and $X^5_2$ glued together, via the identification
+ \[\text{Spec}(K^{sh}_5[x,y]/(y^2 - 5x^3 +18x^2 -29x) \cong \text{Spec}(K^{sh}_5[x,y]/(y^2 - x^3 -37x - 438))\]
+via the change of coordinates $5x_1 = x + 6, 5y_1 = y$, and we note everything already has coefficients in $\Z$, in particular the N\'eron model over the stalk $R_5$ is simply just everything above but taken with respect to $R_5$. \newline
+
 \noindent \textbf{p = 29:}
+Denote $R_5^{sh}$ the strict henselization of $R_{29} = \{ \frac{a}{b} \in \Q| 29 \nmid b\}$ the stalk $\text{Spec}(\Z)$ at $(29)$. 
+The reduction of $P(x)$ mod the maximal ideal of $R_{29}$ is simply taking it mod 29, so 
+\[\overline{P}(x) = x^3 +8x +3 = (x-23)^2(x-12)\]
+where the root -6 reduces to 23 mod 5, and denoting $i = 12$ the solution to $x^2 + 1 = 0$ we see the roots $3 \pm 8i$ are 12,21 mod 5.
+Thus the singular point of the reduction of $E$ mod 29 is at (23,0).
+As in the Special Case, \ref{special-case}, we choose a lift of $23$, for which we choose -6 again.
+Denoting 
 
+\[X_{29}^1 =  \text{Proj}(R^{sh}_{29}[x,y,z]/(y^2z - x^3 -37xz^2 - 438z^3))\]
+\[X_{29}^2 = \text{Spec}(R^{sh}_{29}[x_1,y_1]/(y_1^2 - (x_1)(x_1 - \frac{9+5i}{29})(29x_1 - (9-8i))) = \text{Spec}(R^{sh}_5[x_1,y_1]/(y_1^2 - 29x_1^3 +18x_1^2 -5x_1)\]
+the N\'eron model of $E$ over $R^{sh}_{29}$ is $X_{29}^1$ and $X^{29}_2$ glued together similarly as in the case when $p = 5$.
 
 Thus, to summarize, we have the minimal Weierstrass equation 
 \[\text{Proj}(\Z[x,y,z]/(y^2z - x^3 -37xz^2 - 438z^3))\]
