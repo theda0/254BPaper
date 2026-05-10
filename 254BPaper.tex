@@ -212,7 +212,7 @@ Note that the component maps themselves may not necessarily group homomorphisms.
 We also want to define a translation by $x$ map for group objects in a category and we will show how to do this with respect to a for $x$ a $*$-point of $X$.
 Note that since $*$ is the terminal object in $X$, the functor $\text{Hom}(-, *)$ consists of one element for each $U \in \mc{C}$.
 
-\begin{definition}
+\begin{definition}\label{def:translation}
 	Let $X$ be a group object in $\mc{C}$ and $x \in \text{Hom}(*,X)$.
 	The \textit{translation by $x$} endomorphism map for is the map induced by Yoneda from the natural transformation $\psi: \,:\, \text{Hom}(-,X) \to \text{Hom}(-,X)$, which for each object $U \in \mc{C}$ consists of the component $\text{Hom}(U,X) \to \text{Hom}(U,X)$ is multiplication by $\varphi_x(U) \in U$, where $\varphi_x(U)$ is the element of the natural transformation $\varphi_x: \text{Hom}(-,*) \to \text{Hom}(-,X)$ defined from Yoneda by $x$.
 \end{definition}
@@ -329,7 +329,7 @@ We mention that to get from a proper, regular model to a minimal one, they show 
 \end{enumerate}	
 \end{theorem}
 
-\begin{proposition}
+\begin{proposition}\label{prop:1.13}
 	Let $R$ be a Dedekind domain with fraction field $K$ and $C/\text{Spec}(K)$ a regular projective curve of genus $\geq 1$.
 	Let $X/\text{Spec}(R)$ be a minimal proper regular model for $C$ and denote $X^0$ the largest subscheme of $C$ which is smooth over $R$.
 	Then every $K$-automorphism $f: C \to C$ of the generic fiber of $X$ extends to $R$-automorphisms 
@@ -501,7 +501,7 @@ Thus $Z$ is defined in codimension 1 and so extends everywhere by the previous p
 		In light of the previous remark that $S$-group schemes are automatically separated, as well as the previous proposition which gives us that rational maps $X_K \to E$ are defined everywhere, we see that the two definitions are equivalent. 
 \end{remark}
 
-\begin{proposition}\label{prop:3.7}
+\begin{proposition}\label{prop:2.7}
 	Let $X$ be a proper and smooth $S$-group scheme with connected fibers. 
 	Then $X$ is a N\'eron model of its generic fiber $X_K$.
 \end{proposition}
@@ -578,7 +578,7 @@ We will use it in the proof of propositions such as the following.
 Thus the existence of a global N\'eron model $X$ gives us the existence of all local N\'eron models $X \times \mc{O}_{S,s}$ and furthermore being a N\'eron model for its generic fiber can be checked locally.
 The following proposition tells us that that to construct a Neron model, it suffices to show the existence one over an open set, as well as ones over finitely many other closed points.
 
-\begin{proposition}
+\begin{proposition}\label{prop:2.11}
 	Let $S$ be a Dedekind scheme with ring of rational functions $K$, and let $X_K$ be a smooth and separated $K$-scheme of finite type.
 	Then the following are equivalent.
 \begin{enumerate}
@@ -676,7 +676,7 @@ This gives us that $\mu$ extends to $W_{aff} \times W_{aff}$ for $W_{aff}$ the o
 
 Finally, using the local-global results of the previous subsection, the local case above for discrete valuation rings gives us the general case when there is good reduction everywhere.
 
-\begin{theorem}
+\begin{theorem}\label{theo:3.2}
 	Let $R$ be a Dedekind domain with fraction field $K$ and let $E/K$ an elliptic curve.
 	Choose a Weierstrass equation 
 	\[y^2z + a_1xyz + a_3yz^2 = x^3 + a_2x^2z + a_4xz^2 + a_6z^3\]
@@ -720,7 +720,7 @@ We will give an an extension of Hensel's lemma in the case of multiple polynomia
 	Then there exists a unique $a = (a_1, \dots, a_n) \in R^n$ such that $f(a) = 0$ and $a_i \equiv b_i \pmod{\mk{m}}$ for all $i$.
 \end{lemma}
 
-\begin{proposition}
+\begin{proposition}\label{prop:3.6}
 	Let $(R, \mk{m}, k)$ be a discrete valuation ring. 
 	Let $X$ be a smooth $R$-scheme and $\overline{X}$ its special fiber. 
 	If $R$ is Henselian, then the reduction map
@@ -778,14 +778,14 @@ The same arugment applies verbatim in the case of $R^{sh}$ as we note that $I \s
 We now have the necessary background to begin our proof in the general case starting when there is locally bad reduction.
 We first show that the smooth locus of the minimal model of an elliptic curve is the N\'eron model over a strict henselian ring.
 
-\begin{theorem}\label{theo:4.7}
+\begin{proposition}\label{theo:4.7}
 	Let $R$ be a strict henselian discrete valuation ring with fractions field $K$ and let $E/K$ be an elliptic curve.
 	Let $X/\text{Spec}(R)$ be the minimal proper regular model for $E/K$ and let $X^0$ be the largest subscheme of $X$ which is smooth over $\text{Spec}(R)$.
 	Then the group law of $E$ extends to make $X^0$ into a group scheme over $\text{Spec}(R)$. 
-\end{theorem}
+\end{proposition}
 
-\todo{cite Weil}
-The proof is a bit long and involved, and we will sketch various parts of it. 
+The proof is a bit long and involved, and we will sketch various parts of it.
+For details one may look at $\cite{Artin}$.
 Beforehand, we will give a few preliminary definitions/results.
 
 \begin{definition}
@@ -809,7 +809,7 @@ Then $\mu$ is called a \textit{normal law on X} if it satisfies the two followin
 For example, the group law on a group scheme can be shown to satisfy the above conditions.
 One may thus think of a normal group law as a "pseudo group-law", which we will need to work with in extending the group law of the generic fiber of our potential N\'eron model.
 
-\begin{theorem}\label{theo:4.9}
+\begin{theorem}\label{theo:3.10}
 	Let $R$ be a Dedekind domain, and let $X$ be a smooth $R$-scheme that is of finite type over $\text{Spec}(R)$.
 	Suppose that every fiber of $X$ is non-empty that that $X(R)$ is dense in each fiber.
 	Let $\mu$ be a normal law on $X$.
@@ -827,28 +827,49 @@ One may thus think of a normal group law as a "pseudo group-law", which we will 
 	Then the group scheme $G$ is constructed by viewing the $U_x$ as being "$U$ translated by $x$", with the normal group law $\mu$ providing the gluing data.
 \end{proof}
 
-We now being the proof of \Cref{theo:4.7} 
-
-
-\begin{proof}
-	We first verify that the group law on $E$ defines a normal law on $X^0$.
-	
-\end{proof}
-
-\begin{corollary}
-	Let $R$ be a discrete valuation ring with field of fractions $K$ and let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
-	Then $X^0/R$ is a N\'eron model for $E/K$. 
-\end{corollary}
+We now outline the proof of \Cref{theo:4.7} 
 
 \begin{proof}
-	Use faithfully flat descent + facts from minimal models.
+	The first step is to verify that the group law on $E$ defines a normal law on $X^0$.
+	As $R$ is a discrete valuation ring, the generic fiber $E$ is an open subscheme of $X^0$.
+	Then the multiplication map $\mu_E: E \to E \to E$ defines a rational map $\mu: X^0 \times X^0 \to X^0$, and associativity follows as it is true for $\mu$ since rational maps determined on dense open subsets.
+Thus we want to show that the maps 
+	\begin{align*}
+			&\phi: X^0 \times_R X^0 \dashrightarrow X^0 \times_R X^0 \quad  &\varphi: X^0 \times_R X^0 \dashrightarrow X^0 \times_R X^0\\
+					&(x,y) \to (x, \mu(x,y)) &(x,y) \to (y, \mu(x,y))
+		\end{align*}
+are dense in the special fiber and whose restriction to the special fiber is birational.\newline
+\indent We first show that $\phi$ and $\varphi$ are defined at the generic point at the special fibers of $X^0 \times_R X^0$.
+For $\eta$ the generic point on any of the irreducible components of the special fiber $X^0$, let $R'$ denote the corresponding local ring.
+As $X^0$ is smooth over $R$, one can show that $\text{Spec}(R') \times_R X$ is the minimal proper regular model of $E$ over $\text{Spec}(R')$.
+Then the natural map $\text{Spec}(R') \to X^0$ defines an $R'$ point $\tau$ of $X^0$ (and hence of $\text{Spec}(R') \times_R X$), so defines a translation by $\tau$ map (\ref{def:translation}) which is an automorphism on the generic fiber so defines a birational map.
+However, from the minimality property of $X$ shows that the translation by $\tau$ map is in fact a morphism and fits into a commutative diagram
+\[\begin{tikzcd}
+	{\text{Spec}(R') \times_R X^0} & {\text{Spec}(R') \times_R X^0} \\
+	{X^0 \times_R X^0} & {X^0 \times_R X^0}
+	\arrow["{\times \tau}", from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow["\phi", from=2-1, to=2-2]
+\end{tikzcd}\]
+shows that $\phi$ is defined at every generic point on its special fiber.
+Similar arguments show the same for $\varphi$, hence $\phi$ and $\varphi$ are dense in their special fibers.
+In addition, one shows the restriction of $\phi$ and $\varphi$ to the special fiber is a birational by considering, for any $P \in X^0(R)$ the map
+\[\text{Spec}(R) \times_R X^0 \xrightarrow{P \times 1} X^0 \times_R X^0 \xrightarrow{\phi} X^0 \times_R X^0\]
+and showing its fibers are not all positive dimensional.\newline
+\indent Thus we may apply \Cref{theo:3.10} to get the existence of a group scheme $G$ over $\text{Spec}(R)$ and open subschemes $U \subset R$ and $U' \subset G$ which are isomorphic and where the restriction of $\mu$ to $U$ coincides with the group law of $G$ restricted to $U'$.
+This defines an $R$-rational map $\lambda: G \to X^0$ which we need to show is an $R$-isomorphism.
+Again, any $x \in G(R)$ defines a translation morphism $\sigma_x: G \to G$.
+This restricts to a translation map on its generic fiber (isomorphic to $E$), which using \Cref{prop:1.13} extends to a birational map $\gamma_x: X^0 \to X^0$.
+The minimality property of $X$ shows that $\gamma_x$ is in fact a morphism.
+Now, to extend $\lambda$ to any point $g \in G$ on the special fiber (it is already defined on the generic fiber), we use \Cref{prop:3.6} and the fact $R$ is strict henselian (so the image of $R$-points of $X^0$ are dense in the special fiber) to find a point $x' \in G(R)$ with $\sigma_{x'}(g) \in U'$, in which case since $\lambda = \sigma_{-x'} \circ \lambda \circ \sigma_{x'}$ wherever its defined, and so must be defined at $g$. 
+Now $\lambda^{-1}$ is a birational morphism from a smooth $R$-scheme to a group scheme over $R$; it is defined on the generic fiber from construction, and dense in the special fiber, in particular it is defined in codimension 1.
+So \Cref{weil-extension} gives us $\lambda^{-1}$ is also well-defined, hence $X^0 \cong G$ and is has a group scheme structure extending that of $E$. 
 \end{proof}
-
-
 
 \subsection{The Global Case}
 
-With everything we've developed so far, we are now ready for the case over any Dedekind scheme.
+With everything we've developed so far, we are now ready for the case over any Dedekind scheme, the main theorem of this paper.
 
 \begin{theorem}\label{main-theorem}
 	Let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
@@ -856,8 +877,31 @@ With everything we've developed so far, we are now ready for the case over any D
 \end{theorem}
 
 \begin{proof}
-	There exists an open subset $U \subset S$ that contains only the points with good reduction (on each affine, choose primes not dividing not dividing the discriminant).
-	Then 
+	After a change of coordinates to the Weierstrass equation defining $K$, we may assume its coefficients lie in $R$, which defined a projective subscheme $W \subset \mb{P}^2_R$.
+	There exists an open subset $U \subset \text{Spec}(R)$ that contains only the points with good reduction (choose those primes not dividing not dividing the discriminant).
+	Then \Cref{theo:3.2} gives us that $W \times_R U$ is a N\'eron model for $E$ over $U$. \newline
+	\indent onsider any bad prime $\mk{p}$ of $R$, and denote $R_{\mk{p}}$ the corresponding local ring.Let $X$ denote the minimal proper regular model for $E$ over $R_{\mk{p}}$, and $X^0$ its smooth locus.
+	Then note that $X_{\mk{p}}^{sh} = X \times_{R_{\mk{p}}} \text{Spec}(R_{\mk{p}}^{sh})$ is the minimal proper regular model for $E$ over $\text{Spec}(R_{\mk{p}}^{sh})$.
+	Indeed, it is proper as properness is preserved by base-change, regular as $R_{\mk{p}}^{sh}$ is flat and unramified over $R$.
+	Now minimality follows from the construction of the minimal proper regular model as having no exceptional divisors on the special fibers (see \cite{Licht} and \cite{Shaf}).
+	Now $X^0_{sh} = X^0 \times_{R_{\mk{p}}} \text{Spec}(R_{\mk{p}}^{sh})$ is the smooth locus, so our previous result \Cref{theo:3.10} and [\cite{AEC2}, IV Proposition 6.7] (stated and proved analogously as \Cref{prop:2.7}) gives us that $X^0_{sh}$ is the N\'eron model for $E$ over $R_{\mk{p}}^{sh}$.
+	To descend to the analogous statement for $X^0$, we show that $X^0$ satisfies the N\'eron mapping property.
+	For $Y$ any smooth scheme over $\text{Spec}(R_{\mk{p}})$, and map $\phi_K: Y_K \to E$, denote $\phi_K^{sh}$ the basechange with $K^{sh}$.
+	Denoting $Y^{sh} =Y \times_{R_{\mk{p}}} \text{Spec}(R_{\mk{p}}^{sh})$, $\phi_K^{sh}$  is a map from the generic fiber of $Y^{sh}$ to $X^0_{sh}$.
+	Now since $Y^{sh}$ is smooth over $R_{\mk{p}}^{sh}$, we get an extension $\phi^{sh}$ of $\phi_K^{sh}$.
+	A priori we only know that $\phi_K$ lifts to a rational map $Y \to X^0$, so we have a commutative diagram
+\[\begin{tikzcd}
+	{Y^{sh}} & {X^0_{sh}} \\
+	Y & {X^0}
+	\arrow["{\phi^{sh}}", from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow["{\phi_K}"', dotted, from=2-1, to=2-2]
+\end{tikzcd}\]
+however, as $R_{\mk{p}}^{sh}$ is faithfully flat over $R$, we may apply the results of faithfully flat descent (see \cite{BLR}, Ch.6) which gives us that $\phi_K$ extends to an actual morphism.
+Then \Cref{unique-extension} gives us that $X^0$ is a N\;eron model for $E$ over $R_{\mk{p}}$ at a bad prime.\newline
+\indent With a N\'eron model over an open subset and at the remaining finitely many bad primes, \Cref{prop:2.11} gives us the existence of a N\'eron model over $\text{Spec}(R)$ obtained by gluing these N\'eron models together.
+Again, the construction of the minimal proper regular model as having no exceptional divisors on the special fibers shows it is the smooth locus of the minimal proper regular model. 
 \end{proof}
 
 
