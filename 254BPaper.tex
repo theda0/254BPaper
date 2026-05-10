@@ -19,6 +19,7 @@
 \usepackage{colonequals}
 \usepackage{todonotes}
 \usepackage{cleveref}
+\usepackage{tabularx}
 
 \font\maljapanese=dmjhira at 2.5ex
 \newcommand{\yo}{\textrm{\!\maljapanese\char"48}}
@@ -70,10 +71,15 @@
 \tableofcontents
 
 \section{Introduction}
+For $K$ the fraction field of a Dedekind domain $R$ and consider a scheme $X$ over $\text{Spec}(K)$ .
+One may be interested in how to "extend" this scheme to $\text{Spec}(R)$-models, a scheme over $\text{Spec}(R)$ with generic fiber isomorphic to $X$.
+Ideally, such extensions should have nice properties such as properness, smoothness, and one also hopes that when such extensions exists we can choose a "minimal" one in some sense. \newline
+\indent In this paper, we will introduce two such classes of models: the first of which are arithmetic surfaces, a model for regular projective curves.
+We then give theorems of Abhyankar, Lipman, Lichtenbaum and Shafarevich which give the existence of such models which are proper and regular, and minimal such ones for curves of genus $\geq 1$. \newline
+\indent The second such type of model, the main focus of the paper, are N\'eron models, which we will establish basic facts about, and for which can be shown to exist for abelian varieties in general.
+Elliptic curves are both regular curves and abelian varieties, so one might hope their minimal proper regular arithmetic surface and N\'eron model are related.
+Indeed, in the main theorem of this paper, we will construct the N\'eron model of an elliptic curve by showing the smooth locus of the minimal proper regular model satisfies the desired conditions.
 
-\todo{Give intro}
-
-\section{Group Schemes and Arithmetic Surfaces}
 
 \subsection{Group Schemes}
 
@@ -85,20 +91,21 @@ A major theorem will be the existence of certain minimal such ones for nice enou
 
 \begin{definition}
 	An $S$-scheme $G$ is a group scheme if the functor 
-	\[\text{Hom}(-, G): \textbf{Sch/S}^{\textbf{op}} \to \textbf{Set}\]
+	\[\text{Hom}(-, G): (\textbf{Sch/S})^{\textbf{op}} \to \textbf{Set}\]
 	factors through the forgetful functor from $\textbf{Group}$ to $\textbf{Set}$.
 \end{definition}
 
-In other words, for any $S$-scheme $T$, the set of $T$-points of $G$ forms a group, which is functorial in $T$.
+In other words, for any $S$-scheme $T$, the set of $T$-points of $G$ forms a group, which is functorial with respect to $T$.
 We will show its equivalence to the usual definitions in the more general setting of a category with finite products.
 
-\begin{theorem}
-	Let $\mc{C}$ be a category with finite products, and let $*$ be a terminal object.
+\begin{theorem}\label{theo:group-object}
+	Let $\mc{C}$ be a category with finite products, and let $*$ denote a terminal object.
 	Let $G \in C$ be an object of $C$.
 	Then the functor $\text{Hom}(-, G): \mc{C}^{\textbf{op}} \to \textbf{Set}$ factors through the forgetful functor from \textbf{Group} to \textbf{Set} if and only if there exist maps 
 \[e: * \to G, \quad \quad i:G \to G, \quad \quad \mu: G \times G \to G, \]
 such that the following square commutes:
-\[\begin{tikzcd}
+\begin{equation}\label{eq:1}
+\begin{tikzcd}
 	{G\times G \times G} & {G \times G} & G & {G \times G} & G & {G \times G} \\
 	{G \times G} & G & {G \times G} & G & {G \times G} & G
 	\arrow["{\text{id} \times \mu}", from=1-1, to=1-2]
@@ -115,8 +122,10 @@ such that the following square commutes:
 	\arrow["\mu"', from=2-1, to=2-2]
 	\arrow["\mu"', from=2-3, to=2-4]
 	\arrow["\mu"', from=2-5, to=2-6]
-\end{tikzcd}\]
+\end{tikzcd}
+\end{equation}
 where $e'$ is the unique map $G \to * \xrightarrow{e} G$.
+In this case $G$ is called a group object in the category $\mc{C}$.
 \end{theorem}
 
 \begin{proof}
@@ -124,62 +133,99 @@ where $e'$ is the unique map $G \to * \xrightarrow{e} G$.
 	Now first suppose that there exist maps $e, i, \mu$ as described which make the diagrams commute.
 	For any object $X$ of $\mc{C}$ we describe a natural group structure on $\text{Hom}(X,G)$.
 	Any $f_1, f_2 \in \text{Hom}(X,G)$ define an unique map $X \to G \times G$ by the universal property of products.
-	Composing this with the map $\mu: G \times G \to G$ gives another map $f_1 \times f_2: X \to G$ which we denote as the product; we now show forms a group, where the inverse map $f^{-1}$ of $f \in \text{Hom}(X,G)$ is $i \circ f$ and the identity element $f_e$ is the map $X \to * \xrightarrow{e} G$. \newline
-	\indent Note that $f_e$ acts as an identity as the map as for any other map $f$ the composition is the map   
+	Composing this with the map $\mu: G \times G \to G$ gives another map $f_1 \times f_2: X \to G$ which we denote as the product; we now show this forms a group, where the inverse map $f^{-1}$ of $f \in \text{Hom}(X,G)$ is $i \circ f$ and the identity element $f_e$ is the map $X \to * \xrightarrow{e} G$. \newline
+	\indent Note that $f_e$ acts as an identity as the map as for any other map $f$ the composition is the map.
+	Indeed, for any $g \in \text{Hom}(X,G)$ the map $g \times f_e: X \to G$ is the composition
+	\[X \xrightarrow{g} G \xrightarrow{id \times e'} G \times G \xrightarrow{\mu} G = X \xrightarrow{g} G \xrightarrow{id} G\]
+	which follows from the bottom left of the middle commutative diagram in $(\ref{eq:1})$, hence $g \times f_e = g$.
+The same argument with the top right of the same square shows that $f_e$ is also a left inverse, hence it acts as an identity element. \newline 
+\indent To verify that $f^{-1}$ is an inverse element for any $f$, note that $f \times f^{-1}$ is the composition 
+	\[X \xrightarrow{f} G \xrightarrow{id \times i} G \times G \xrightarrow{\mu} G \]
+	The bottom left of the rightmost commutative diagram in ($\ref{eq:1}$), says this factors through $e'$, in particular it must go through the terminal object and so is of the form $X \to * \xrightarrow{e} G$.
+This can only be $f_e$ by uniqueness of maps to $*$, hence $f \times f^{-1} = f_e$. 
+Again the other part of the commutative diagram gives that $f^{-1} \times f = f_e$ so $f^{-1}$ is a well-defined inverse. \newline
+	\indent Finally, we show associativity.
+For any $f,g,h \in \text{Hom}(X,H)$, the map $(f \times g) \times h$ is the composition 
+\[X \xrightarrow{f \times g \times h} G \times G \times G \xrightarrow{\mu \times id} G\times G \xrightarrow{\mu} G\]
+By the leftmost commutative diagram in $(\ref{eq:1})$ this is equal to 
+\[X \xrightarrow{f \times g \times h} G \times G \times G \xrightarrow{id \times \mu} G\times G \xrightarrow{\mu} G = f \times (g \times h)\]
+showing associativity.
+All that remains to show is that this group structure is functorial, with respect with a map $\phi: X_2 \to X_1$.
+Let $f_1, f_2 \in \text{Hom}(X_1, G)$ and let $g_1, g_2$ denote $f_1 \circ \phi, f_2 \circ \phi$ respectively.
+We want to show that $\phi \circ (f_1 \times f_2) = g_1 \times g_2$.
+However, $\phi \circ (f_1 \times f_2)$ also factors through $G \times G$ defined by the maps $f_1 \circ \phi = g_1$ and $f_2 \circ \phi = g_2$ so they must be the same. \newline
 
-	Conversely, suppose that $\text{Hom}(-, G): \mc{C} \to \text{Set}$ factors through the forgetful functor from \textbf{Group} to \textbf{Set}.
-
-	\todo{Finish proof}
+	For the other direction, suppose that $\text{Hom}(-, G): \mc{C} \to \text{Set}$ factors through the forgetful functor from \textbf{Group} to \textbf{Set}.
+	The maps $\mu, i$ and $\mu$ will be defined via the group structure on $\text{Hom}(_, X)$ via Yoneda's lemma [\cite{CTIC}, Theorem 2.2.4/Corollary 2.2.8].
+	More specifically, note that for any group we have the obvious multiplication maps $\mu': G \times G \to G$ as well as inverse and map $i':G \to G$ and inclusion of the identity element $e': \cdot \to G$.
+	In particular, for any $U \in \mc{C}$ these maps assemble into the corresponding maps 
+	\[\mu_U: \text{Hom}(U,G) \times \text{Hom}(U,G) \to \text{Hom}(U,G), \quad i_U: \text{Hom}(U,G) \to \text{Hom}(U,G), \quad e_U: \cdot \to \text{Hom}(U,G)\]
+	As $\text{Hom}(-,G)$ is a functorial with respect to the group structure, one sees that across all $U$ the above maps define natural transformations.
+	\[\psi_{\mu}: \text{Hom}(-,G) \times \text{Hom}(-,G) \to \text{Hom}(-,G), \quad \psi_I: \text{Hom}(-,G) \to \text{Hom}(-,G), \quad \psi_e: \cdot \to \text{Hom}(-,G)\]
+	Now $\mc{C}$ has finite products by assumption, the functor $\text{Hom}(-,G) \times \text{Hom}(-,G)$ is represented by $G \times G$ and the functor taking every object to a single element is represented by the terminal object *. 
+	So by Yoneda these natural transformations define unique maps $\mu: G \times G \to G$, $i: G \to G$ and $e: * \to G$. 
+	They satisfy the diagrams in the theorem as they are clearly satisfied for groups.
+	For example the first diagram is satisfied as for each $U \in \mc{C}$ the below diagram commutes by the associativity of groups 
+\[\begin{tikzcd}
+	{\text{Hom}(U,G) \times \text{Hom}(U,G) \times \text{Hom}(U,G)} & {\text{Hom}(U,G) \times \text{Hom}(U,G)} \\
+	{\text{Hom}(U,G) \times \text{Hom}(U,G)} & {\text{Hom}(U,G)}
+	\arrow["{ \text{id} \times \mu'}", from=1-1, to=1-2]
+	\arrow["{\mu' \times \text{id}}"', from=1-1, to=2-1]
+	\arrow["{\mu'}", from=1-2, to=2-2]
+	\arrow["{\mu'}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+and define components of a natural transformation among the functors represented by $G \times G \times G$, $G \times G$ and $G$, which are given by the maps $\mu, i$ and $e$ among the objects as in the theorem.
+The proof for the remaining two diagrams is the same; the middle and third square commutes for your usual groups in general by properties of the identity element and inverse elements in particular. 
+These (for each $\text{Hom}(U,G)$) fit together into natural transformations among the functors represented by $G$ and $G \times G$ which correspond to the given diagrams by Yoneda.
 \end{proof}
 
-
-
-\todo{Proof of equivalence}
-
-\begin{example}
-	An elliptic curve is a group scheme.
-\end{example}
+There are benefits to this functor of points of view. For example, we can see that the product $G_1 \times G_2$ of group objects must also be a group object, as for each $U \in \mc{C}$ we have that 
+\[\text{Hom}(U, G_1 \times G_2) \cong \text{Hom}(U,G_1) \times \text{Hom}(U, G_2)\]
+can be equipped with the usual group product structure which is functorial; this isn't as clear working with just the commutative diagrams.
 
 \begin{example}
 	Consider $\mb{A}_{\Z}^1 \cong \text{Spec}(\Z[x])$ in the category of schemes.
 	Then as is the case for affine schemes we have $\text{Hom}(-, \mb{A}_{\Z}^1) \cong \text{Hom}_{\textbf{CRing}}(\Z[x], \Gamma(-, \mc{O}_{(-)}))$ is the global section functor.
-	Using the underlying 
+	The underlying abelian group of these rings thus shows that $\text{Hom}(-, \mb{A}_{\Z}^1)$ factors through the category of groups, and so $\mb{A}_{\Z}^1$ is a group object.
+	However, global sections naturally have more structure as a commutative ring, so using the same arguments as in \Cref{theo:group-object} one can show it additionally has the structure of a (commutative) ring object in the category of schemes. 
 \end{example}
 
-\begin{definition}
-	Abelian schemes/varieties.
-\end{definition}
 
-\begin{remark}
-	There are some benefits to the functor of points view. 
-	For example, from our definition it becomes clear that a product of group schemes is still a group scheme. 
-	As another aside, $\mathbb{A}^1$ represents the global section functor has a natural ring structure, the same arguments
-\end{remark}
+\begin{example}
+	An elliptic curve is a group scheme.
+	For the explicit equations defining the morphisms, see [\cite{AEC1}, III.2.3].
+\end{example}
+
 
 The multiplication by $m$ endomorphisms are very important in the study of elliptic curves. 
-In fact, these are defined for any abelian group scheme.
+In fact, as another use of functorial point of view of group objects, we show these can be in general defined for any group scheme.
 
 \begin{definition}
-The multiplication by $m$ endomorphism map for a group scheme $X$ over $S$, is the map induced by Yoneda from the natural transformation $(-)^n \,:\, \text{Hom}(-,X) \to \text{Hom}(-,X)$, which for each $S$-scheme $U$, the component $\text{Hom}(U,X) \to \text{Hom}(U,X)$ is the multlpication by $n$ mp.
+	Let $X$ be a group object in $\mc{C}$.
+	The \textit{multiplication by $m$} endomorphism map is the map induced by Yoneda from the natural transformation $(-)^n \,:\, \text{Hom}(-,X) \to \text{Hom}(-,X)$, which for each $S$-scheme $U$ consists of  the component $\text{Hom}(U,X) \to \text{Hom}(U,X)$ is the multiplication by $n$ map.
+\end{definition}
+
+Indeed, as $f(x^n) = f(x)^n$ for any group homomorphism, the above components are functorial and so form a well-defined natural transformation $\text{Hom}(-,X) \to \text{Hom}(-,X)$.
+Note that the component maps themselves may not necessarily group homomorphisms. \newline
+
+\indent 
+We also want to define a translation by $x$ map for group objects in a category and we will show how to do this with respect to a for $x$ a $*$-point of $X$.
+Note that since $*$ is the terminal object in $X$, the functor $\text{Hom}(-, *)$ consists of one element for each $U \in \mc{C}$.
+
+\begin{definition}
+	Let $X$ be a group object in $\mc{C}$ and $x \in \text{Hom}(*,X)$.
+	The \textit{translation by $x$} endomorphism map for is the map induced by Yoneda from the natural transformation $\psi: \,:\, \text{Hom}(-,X) \to \text{Hom}(-,X)$, which for each object $U \in \mc{C}$ consists of the component $\text{Hom}(U,X) \to \text{Hom}(U,X)$ is multiplication by $\varphi_x(U) \in U$, where $\varphi_x(U)$ is the element of the natural transformation $\varphi_x: \text{Hom}(-,*) \to \text{Hom}(-,X)$ defined from Yoneda by $x$.
 \end{definition}
 
 \begin{remark}
-	
+	The multiplication by $m$ and translation maps just mentioned can also be defined directly via the maps $\mu$ and $e$, for example see (\cite{AEC2}, IV, Remark 3.3 and 3.4), the Yoneda argument used in \Cref{theo:group-object} can be used to show their equivalence.
 \end{remark}
-
-Similarly, we can define the "translation by $x$" map, for $x$ an $X$-point of
-
-\begin{definition}
-	
-\end{definition}
-
 
 \subsection{Arithmetic Surfaces}
 
 Throughout the rest of the paper, we will assume the residue fields of our base schemes are always perfect.
 Given a scheme $X$ over Spec($K$), our interest will be in "lifts" of $X$ to a scheme $X'$ over a scheme $S$ with function field $K$ such that its generic fiber $X'_K$ is isomorphic to $X$, which we will call \textit{$S$-models} of $X$.  
-We define one nice example of such a lift through Arithmetic surfaces; N\'eron models will also be such objects as we will later encounter.
-
+We initially define one nice example of such a lift through Arithmetic surfaces, as well as N\'eron models later.
 
 
 \begin{definition}
@@ -188,7 +234,7 @@ We define one nice example of such a lift through Arithmetic surfaces; N\'eron m
 \end{definition}
 
 \begin{remark}
-	Note that an arithmetic surface has dimension 2 (it is flat over $R$ with special fibers of pure dimension 1). 
+	Note that an arithmetic surface has dimension 2 (it is flat over $\text{Spec}(R)$ with special fibers of pure dimension 1). 
 	While its generic fiber is by definition regular, this need not be true for the special fibers, which may be singular.
 	We will be interested in arithmetic surfaces which satisfy properties such as smoothness and properness.
 \end{remark}
@@ -199,7 +245,7 @@ We define one nice example of such a lift through Arithmetic surfaces; N\'eron m
 \end{example}
 
 We mention now an useful way of thinking about smoothness of arithmetic surfaces over $\text{Spec}(R)$, being equivalent to all the fibers being regular over their corresponding residue fields.
-This is due to the following lemma we leave here without proof.
+This is due to the following lemma which we leave here without proof.
 
 \begin{proposition}[\cite{BLR}, 2.4, Proposition 8]\label{smoothness-lemma}
 	Suppose $f: X \to S$ is locally of finite presentation. 
@@ -212,6 +258,10 @@ This is due to the following lemma we leave here without proof.
 
 \end{proposition}
 
+\begin{remark}
+All schemes we work over will be locally of finite type over a Noetherian ring, and hence locally of finite presentation.
+In addition, the smoothness over the residue fields is equivalent to regularity under our assumption that all such fields are perfect, see the Smoothness-Regularity Comparison Theorem, [\cite{FOAG}, 13.2.7].
+\end{remark}
 
 We now give an useful criterion for determining regularity of closed points along special fibers.
 \begin{proposition}
@@ -230,7 +280,7 @@ We now give an useful criterion for determining regularity of closed points alon
 
 
 \begin{proof}
-	To prove (1), note that $x$ viewed in $C$ is of codimension 2, as $C$ is regular by assumption the cotangent space $\mk{m}_{C,x}/\mk{m}^2_{C,x}$ has dimension 2.
+	To prove (1), note that $x$ viewed in $C$ is of codimension 2 and as $C$ is regular by assumption the cotangent space $\mk{m}_{C,x}/\mk{m}^2_{C,x}$ has dimension 2.
 	Now $x$ viewed in $C_{\mk{p}}$ is of codimension 1, so $x$ is regular in $C_{\mk{p}}$ if and only if the dimension of its cotangent space is equal to 1.
 	However since
 	\[\mk{m}_{C_{\mk{p}},x}/\mk{m}^2_{C_{\mk{p}},x} = \mk{m}_{C,x}/(\mk{m}^2_{C,x} + \pi^*(\mk{p}))\]
@@ -241,9 +291,9 @@ We now give an useful criterion for determining regularity of closed points alon
 \end{proof}
 
 \begin{proposition}\label{proper-regular-prop}
-	Let $X/\text{Spec}(R)$ be an arithmetic surface, and $C/K$ its generic fiber.
+	Let $X/\text{Spec}(R)$ be an arithmetic surface, and $C/\text{Spec}(K)$ its generic fiber.
 \begin{enumerate}
-	\item if $C$ is proper over $\text{Spec}(R)$, then 
+	\item If $C$ is proper over $\text{Spec}(R)$, then 
 		\[C(K) = X(R)\]
 	\item Suppose furthermore that $X$ is regular, and $X^0 \subset X$ the largest open subscheme of $X$ that is smooth over $\text{Spec}(R)$. 
 		Then 
@@ -267,28 +317,27 @@ tells us there is a unique $R$-point of $X$ for each $K$-point of $C$ as we want
 \end{proposition}
 
 We now give (without proof) theorems of Abhyankar, Lipman, Lichtenbaum, and Shafarevich which gives us the existence of proper and regular arithmetic surfaces for non-singular projective curves, when the genus of this curve $\geq 1$ we further have minimal such ones (i.e. satisfying an universal property).
-We mention that to get from a proper, regular model to a minimal one, we show we can "blow down" any exceptional divisors on the special fibers and that a model with no exceptional divisors is minimal in our sense.
+We mention that to get from a proper, regular model to a minimal one, they show that one can "blow down" any exceptional divisors on the special fibers and that a model with no exceptional divisors is minimal in our sense.
 
-\begin{theorem}[Minimal Proper Regular Models (Abhyankar, Lipman, Lichtenbaum, Shafarevich)]\label{min-as}
+\begin{theorem}[Minimal Proper Regular Models]\label{min-as}
 	Let $R$ a Dedekind domain with fraction field $K$ and  $C/K$ be a non-singular projective curve of genus $g$.
 \begin{enumerate}
-	\item  There exists a proper, regular arithmetic curve over $\text{Spec}(R)$ with generic fiber isomorphic to $C/K$, which we call a proper regular model for $C/K$.
-	\item Assume $g \geq 1$.
-		There exists a proper regular model for $C/K$ satisfying the following minimality property: \newline
-	\indent \textbf{Let $C'/R$ be any other proper regular model for $C/K$. Then any $R$-birational map $C' \to C^{min}$ is an $R$-isomorphism.} 
+	\item (Abhyankar \cite{Abh1}, \cite{Abh2}, Lipman \cite{Lip1}, \cite{Lip2}) There exists a proper, regular arithmetic curve over $\text{Spec}(R)$ with generic fiber isomorphic to $C/K$, which we call a proper regular model for $C/K$.
+	\item(Lichtenbaum \cite{Licht}, Shafarevich \cite{Shaf}) Assume $g \geq 1$. 
+		Then there exists a proper regular model for $C/K$ satisfying the following minimality property:   \textbf{Let $C'/R$ be any other proper regular model for $C/K$. Then any $R$-birational map $C^{min} \to C'$ is an $R$-isomorphism.} 
 
 \end{enumerate}	
 \end{theorem}
 
 \begin{proposition}
 	Let $R$ be a Dedekind domain with fraction field $K$ and $C/\text{Spec}(K)$ a regular projective curve of genus $\geq 1$.
-	Let $X/\text{Spec}(R)$ be a minimal proper regular model for $C/K$ and denote $X^0$ the largest subscheme of $C$ which is smooth over $R$.
+	Let $X/\text{Spec}(R)$ be a minimal proper regular model for $C$ and denote $X^0$ the largest subscheme of $C$ which is smooth over $R$.
 	Then every $K$-automorphism $f: C \to C$ of the generic fiber of $X$ extends to $R$-automorphisms 
 	\[g: X \to X, \quad \quad  g': X^0 \to X^0\]
 \end{proposition}
 
 \begin{proof}
-	We first note that any $K$-morphism of generic fibers extend to a rational $R$-morphisms $f: X \to X$ due to a future lemma (\Cref{EGA-lemma}, (a)) which is in fact birational as one can show the generic fibers is dense in $X$.
+	We first note that any $K$-morphism of generic fibers extend to a rational $R$-morphisms $f: X \to X$ due to [\Cref{EGA-lemma}, (a)] which is in fact birational as one can show the generic fiber is dense in $X$.
 	The minimality property given in the above theorem gives us that $f$ can be extended to an $R$-isomorphism $X \to X$.
 	To show that $f$ can be restricted to the open subscheme $X^0$, note that for any $x \in X^0$ and smooth open neighborhood $x \in U$ containing it that $f(U)$ is smooth as it is an isomorphism, hence $f(X^0) \subset X^0$.
 	The same argument also applies to $f^{-1}$ giving us the reverse inclusion and hence $f$ restricts to an $R$-isomorphism $X^0 \to X^0$ as we wanted.
@@ -306,8 +355,7 @@ In the case of the question of whether there is a notion of a minimal such model
 Another notion comes in the form of N\'eron Models.
 
 \begin{definition}[N\'eron Model]\label{def:NM}
-	Let $X_K$ be a smooth and separated $K$-scheme of finite type. A \textit{N\'eron model} of $X_K$ is an $S$-model of $X$  of $X_K$ which is smooth, separated, and of finite type which satisfies the following universal property (which we call the N\'eron mapping property).\\
-	\indent \textbf{For each smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$, there exists a unique $S$-morphism $u: Y \to X$ extending $u_K$}.
+	Let $X_K$ be a smooth and separated $K$-scheme of finite type. A \textit{N\'eron model} of $X_K$ is an $S$-model of $X$  of $X_K$ which is smooth, separated, and of finite type which satisfies the following universal property (which we call the N\'eron mapping property): \textbf{For each smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$, there exists a unique $S$-morphism $u: Y \to X$ extending $u_K$}.
 \end{definition}
 
 \noindent Immediately from its definition we have the following important facts.
@@ -317,18 +365,17 @@ Let $X$ be a N\'eron model for its generic fiber $X_K$. Then the following hold:
 \begin{enumerate}
   \item $X$ is uniquely determined by $X_K$ up to unique isomorphism.
   \item The natural map $X(S) \to X_K(K)$ is bijective, in other words every $K$-point of $X_K$ lifts to an unique $S$-point of $X$. 
+  \item Any automorphism $\tau_K: X_K \to X_K$ of the generic fiber lifts to an unique automorphism $\tau: X \to X$ of its N\'eron model.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 	The proof of (1) is the usual one for objects defined by universal properties. Namely, for two such models $X$ and $X'$ the identity morphisms  on their generic fibers induce maps $f:X \to X'$ and $g: X' \to X$ from the N’eron mapping property. Then $f \circ g$ and $g \circ f$ are unique lifts of the identity morphisms of the generic fibers, but the identity morphism already satisfies this so they must be equal. 
 	Hence $f \circ g = \text{id}_{X'}$ and $g \circ f = \text{id}_{X}$ which shows $X$ and $X'$ are isomorphic. \newline
-	\indent To prove (2), note that $S$ is smooth over itself, now applying the N\'eron mapping property for its generic fiber $\text{Spec}(K)$ tells us precisely every $K$-point of $X_K$ lifts uniquely to an $S$-point of $X$.
+	\indent To prove (2), note that $S$ is smooth over itself, now applying the N\'eron mapping property for its generic fiber $\text{Spec}(K)$ tells us precisely every $K$-point of $X_K$ lifts uniquely to an $S$-point of $X$. \newline
+	\indent Finally, to prove (3), denote the lifts of $\tau_K$ and $\tau_K^{-1}$ from the N\'eron mapping property as $\tau^{-1}$.
+Then $\tau \circ \tau^{-1}$ is the unique lift of $\tau_K \circ \tau_K^{-1} = \text{id}_{X_K}$ so must be the identity, hence the lift $\tau$ is an automorphism.
 \end{proof}
-
-\begin{remark}
-	\todo{etale extension?}
-\end{remark}
 
 When verifying that that a scheme satisifes the N\'eron mapping property, we show that we in fact do not need to worry about uniqueness of the lifts; this relies on the separatedness of N\'eron models and the condition that we only worry about maps from smooth schemes. 
 
@@ -341,29 +388,39 @@ Suppose that for any smooth $S$-scheme $Y$ and $K$-morphism $u_K: Y_K \to X_K$ t
 	Consider any two possible extensions $u_1, u_2: Y \to X$ extending $u_K$.
 	We first show that the generic fiber $Y_K \subset Y$ is dense in $Y$.
 	Indeed, since $Y$ is flat and locally of finite presentation over $S$ (as it is smooth over $S$) its structure morphism is an open morphism [\cite{SP}, Lemma 29.25.10]. 
-Then every nonempty open $U$ of $Y$ maps to a nonempty open in $S$, which must contain a generic point, i.e. $U$ intersects the generic fiber hence it is dense. \newline
+Then every nonempty open $U$ of $Y$ maps to a nonempty open in $S$, which must contain a generic point, i.e. $U$ intersects the generic fiber $Y_K$, hence it is dense in $Y$. \newline
 \indent Now note that $S$ is regular being a Dedekind scheme, hence $Y$ is regular as it is smooth over $S$: in particular it is reduced. 
-Now the Reduced-To-Separated Theorem [\cite{FOAG}, 11.3.2] shows any two maps which extends $u$ must be the same.
-To be more precise, one can show that the closed subscheme $E$ which $u_1$ and $u_2$ agree on is the limit of the below diagram 
+The subscheme $E$ on which $u_1$ and $u_2$ agree on is the limit $E$ of the below diagram 
 \[\begin{tikzcd}
 	E & X \\
 	Y & {X \times_S X}
 	\arrow[from=1-1, to=1-2]
 	\arrow[from=1-1, to=2-1]
 	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
-	\arrow["\delta", from=1-2, to=2-2]
+	\arrow["\Delta", from=1-2, to=2-2]
 	\arrow["{u_1 \times u_2}"', from=2-1, to=2-2]
 \end{tikzcd}\]
-which upon base-changing to $K$ (which preserves fiber products), shows that the generic fiber factors through $E$, hence $E$ is a closed subscheme containing all of $Y$, and must be all of $Y$ as it is reduced.
+which upon base-changing to $K$ (which preserves fiber products) we obtain 
+\[\begin{tikzcd}
+	{E_K} & {X_K} \\
+	{Y_K} & {X_K \times_K X_K}
+	\arrow["\phi", from=1-1, to=1-2]
+	\arrow[""', from=1-1, to=2-1]
+	\arrow["\Delta", from=1-2, to=2-2]
+	\arrow["{u_K \times u_K}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+as base-change preserves fibered products $E_K$ must be the fibered product of the above diagram.
+However, we note that $\phi$ must be $Y_K \xrightarrow{u_K} X_K$ as it commutes with the diagram and satisfies the universal property.
+In particular, this says that $E_K = Y_K$, hence the locus where $u_1, u_2$ agree contains the generic fiber.
+Now the Reduced-To-Separated Theorem [\cite{FOAG}, 11.3.2] shows any two maps which extends $u$ must be the same as $Y$ is reduced and $X$ is separated over $S$.
 \end{proof}
 
-Thus to verify the N\'eron mapping property, we only need to show existence of lifts which we will make us of later on.
-
+So, for example, to verify the N\'eron mapping property, we only need to show existence of lifts  for maps of generic fibers.
 
 \subsection{N\'eron Models of Group Schemes}
 
 Our interest N\'eron Models will be primarily in the form of group schemes.
-One nice reason is that N\'eron models respect the group scheme structure, which we give below without proof.
+One nice reason is that N\'eron models respect the group scheme structure, which we give below without proof but is not hard to show directly from definitions.
 
 \begin{proposition}[\cite{BLR}, 1.2, Proposition 6]
 	Let $X$ be a smooth and separated $S$-scheme which is a N\'eron model of its generic fiber $X_K$.
@@ -371,10 +428,12 @@ One nice reason is that N\'eron models respect the group scheme structure, which
 \end{proposition}
 
 \begin{remark}
-Furthermore, in the group scheme case, we do not need to worry about the separatedness criterion for N\'eron models in $\Cref{def:NM}$.
-	Indeed, \todo{give proof?} 
+We remark here in the group scheme case that we do not need to worry about the separatedness criterion for N\'eron models in $\ref{def:NM}$.
+Indeed, one can show that a group scheme is separated if and only its unit section is a closed immersion [\cite{BLR}, 7.1 Lemma 2].
+Thus group schemes over fields are automatically separated, and one can show that the unique lift of the unit section $\text{Spec}(K) \to X_K$ is the unit section of $X$ and is a closed immersion.
 \end{remark}
 
+We now give an useful extension theorem, for certain rational maps into group schemes over $S$.
 
 \begin{proposition}\label{weil-extension}
 	Let $S$ be a normal noetherian base scheme, and $u: Z \to G$ an $S$-rational map from a smooth $S$-scheme $Z$ to a smooth and separated $S$-group scheme $G$.
@@ -391,7 +450,7 @@ In particular, if $u$ is defined in codimension $\leq 1$, it is defined everywhe
 	Let $U$ denote the maximal domain of definition of $U$.
 	Consider the rational map $v: Z \times_S Z \to G$ which is the composition $u \times (u \circ i)\,:\,Z \times_S  Z \to G \times G$ composed with the the multiplication morphism $\mu: G \times G \to G$.
 	Let $F$ denote the maximal domain of definition of $V$, then clearly $U \times U$ lies in it.
-	The main thing that we show  is that the image of the diagonal map $\Delta: Z \to Z \times_S Z$ lies in $F$.
+	The first main thing we show is that the image of the diagonal map $\Delta: Z \to Z \times_S Z$ lies in $F$.
 	Denote $A$ the image of the diagonal $\Delta$ which we will sometimes identify with $Z$; we want to show $F \ic A = \emptyset$
 	Now the map $Z \xrightarrow{\Delta} Z \times_S Z \xrightarrow{v} G$ from construction factors through the unit section $F: S \to G$. 
 	Assume for sake of contradiciton there is a $x \in F \ic A$ and let $s$ denotes its image in $S$.
@@ -432,14 +491,14 @@ This map coincides with $Z' \to G$, written in coordinates as $(z_1, z_2) \to v(
 	\arrow[from=2-1, to=2-2]
 \end{tikzcd}\]
 the rational map extends to a rational map $\mc{O}_{Z, \eta} \to Y$.
-We can spread this out to a rational map $Z \to Y$ which agrees on maps of function fields with $u$, hence are equivalent rational maps.
-Thus $Z$ is defined in codimension 1 and so extends everywhere.
+We can spread this out to a rational map $Z \to Y$ which agrees on maps of function fields with $u$, hence are equivalent rational maps (as in \Cref{EGA-Lemma}).
+Thus $Z$ is defined in codimension 1 and so extends everywhere by the previous proposition.
 \end{proof}
 
 \begin{remark}
 	There are many seemingly differing definitions of N'eron models as compared to \Cref{def:NM}.
 	For example, in \cite{AEC2} for the case of $E/K$ an elliptic curve, it defines the N\'eron model as a smooth group scheme with generic fiber $E$, satisfying the extension property for \textit{rational} maps $X_K \to E$.
-		In light of the previous remark that $S$-group schemes separated and the previous proposotion which gives us that rational maps $X_K \to E$ are defined everywhere, we see that the two definitions are equivalent. 
+		In light of the previous remark that $S$-group schemes are automatically separated, as well as the previous proposition which gives us that rational maps $X_K \to E$ are defined everywhere, we see that the two definitions are equivalent. 
 \end{remark}
 
 \begin{proposition}\label{prop:3.7}
@@ -449,15 +508,19 @@ Thus $Z$ is defined in codimension 1 and so extends everywhere.
 
 \begin{proof}
 	Let $Y$ be any smooth $S$-scheme.
-	In light of \Cref{cor:weil-extension}, it suffices to show that any $K$-morphism $u_K: Y_K \to X_K$ has a rational map $u: Y \to K$	extending it.
+	In light of the previous \Cref{cor:weil-extension}, it suffices to show that any $K$-morphism $u_K: Y_K \to X_K$ has a rational map $u: Y \to K$ extending it.
 	As we argued in that corollary, it suffices to assume that $Y$ is irreducible.
 	Then using the bijection in \Cref{EGA-lemma}, (a), viewing $K$ as the stalk of the generic point of $Y$, it lifts to a map from a Zariski open of $Y$ to $X$, which defines a rational map lifting $u_K$, as we wanted to show.
 
 \end{proof}
 
+Ths previous proposition will be of use to us, in that we can sometimes find such an ncie enough $S$-model, in which case to show it is a N\'eron model it suffices to show it is a group scheme (oftentimes extending a group scheme structure of the generic fiber).
+
 \subsection{Basic Properties of N\'eron Models}
 
-\todo{intro, fill proofs}
+In this subsection we will introduce some key properties of N\'eron models. 
+In particular, we will formalize how one can check a "global" N\'eron model locally, which will give us many tools for verifying/constructing N\'eron models which we use in the next section for elliptic curves.
+
 \begin{proposition}\label{etale-basechange}
 	N\'eron models commute with \'etale base change, i.e. if $\alpha: S' \to S’$ is  \'etale, with $K'$ the ring of rational functions on $S'$, then $X_{S'} = X \times_S S'$ is a N\'eron model for $X_{K'} = X_K \times_{\text{Spec(K)}} \text{Spec}(K')$. 
 \end{proposition}
@@ -472,21 +535,22 @@ Thus $Z$ is defined in codimension 1 and so extends everywhere.
 \end{proof}
 
 As an example, as open immersions are \'etale, for any open subscheme $S' \subset S$ we have that $X \otimes_S S'$ is a N\'eron model over $S'$. 
+We've already implicitly made use of the following lemma a few times, but state it precisely here.
 
-We will need to make use of the following lemma.
-\begin{lemma}[EGA IV, 8.8.2]\label{EGA-lemma}
+\begin{lemma}[EGA $\text{IV}_3$, 8.8.2]\label{EGA-lemma}
 	Let $s$ be a point of a scheme $S$. Then
 \begin{enumerate}
 	\item If $X,Y$ are $S$-schemes of finite presentation, then the canonical map
-		\[\varinjlim \text{Hom}_{S'}(X \times_S S'. Y \times_S S') \to \text{Hom}_{\mc{O}_{S,s}}(X \otimes_S \mc{O}_{S,s}, Y \otimes_S \mc{O}_{S,s}) \]
+		\[\varinjlim \text{Hom}_{S'}(X \times_S S'. Y \times_S S') \to \text{Hom}_{\mc{O}_{S,s}}(X \times_S \mc{O}_{S,s}, Y \times_S \mc{O}_{S,s}) \]
 	taken over all open neighborhoods $S'$ of $s$ in $S$ is bijective.
 \item Let $X'$ be an $\mc{O}_{S,s}$-scheme of finite presentation.
-	Then there is an open neigborhood $S'$ of $s$ in $S$ and an $S'$-scheme $X'$ of finite presentation such that $X \otimes_{S'} \mc{O}_{S,s}$ is isomorphic to $X'$.
+	Then there is an open neigborhood $S'$ of $s$ in $S$ and an $S'$-scheme $X'$ of finite presentation such that $X \times_{S'} \mc{O}_{S,s}$ is isomorphic to $X'$.
 \end{enumerate}
 
 \end{lemma}
 
-We will not give a proof of the lemma here, but we note it uses finite presentation (finitely many generators and relations) to allows use of the method of "spreading out" from the stalk $\mc{O}_{S,s}$ to a Zariski open containing it. 
+We will not give a proof of the lemma here, but we note it uses finite presentation (finitely many generators and relations) to allows use of the method of "spreading out" from the stalk $\mc{O}_{S,s}$ to a Zariski open containing it.
+This requires finite presentation (finitely many generators and relations among them), as finding an open through which something factors through will usually involves inverting the coefficients on the relations among other values, of which we need finitely many of. 
 We will use it in the proof of propositions such as the following.
 
 \begin{proposition}\label{lg:closed}
@@ -499,18 +563,20 @@ We will use it in the proof of propositions such as the following.
 \end{proposition}
 
 \begin{proof}
-	We first show that 1. implies 2. and so select any closed point $s \in S$.
+	We first show that (1) implies (2) and so select any closed point $s \in S$.
 	To show that $X \times_S \mc{O}_{S,s}$ is a N\'eron model for its generic fiber (in fact the same as the one for $X$), consider any smooth $\mc{O}_{S,s}$ scheme $Y_s$ and $K$-morphism $u_K$ from its generic fiber $Y_{s,K}$ to $X_K$.
-	We just want to construct a lift of $u_K$, so we may assume that $Y$ is quasicompact (so finitely presetned over $\mc{O}_{S,s}$), as we may cover $Y$ by such sets (even affine opens), and a lift of $U_K$ along this open cover glues together.
+	We just want to construct a lift of $u_K$, so we may assume that $Y$ is quasicompact (so finitely presented over $\mc{O}_{S,s}$), as we may cover $Y$ by such sets (even affine opens), and a lift of $U_K$ along this open cover glues together using \Cref{unique-extension}.
 	Now by \Cref{EGA-lemma}, (2), we can lift $Y_s$ to a scheme $Y_{S'}$ over an open $S' \subset S$ which we can take to be connected, whose fiber over $\mc{O}_{S,s}$ is $Y_s$.
-	As $Y_s$ is smooth over $\mc{O}_{S,s}$, so locally the map is of the form $S'[y_1, \dots, y_m]/(g_1, \dots, g_s) \to \mc{O}_{S,s}[x_1, \dots, x_{n+r}]/(f_1, \dots, f_r)$ where the determinant of the Jacobian matrix of the $f_i$ in $x_1, \dots, x_r$ is invertible. 
+	As $Y_s$ is smooth over $\mc{O}_{S,s}$, the inclusion of $Y_s$ into $Y_{S'}$ is of the form $S'[y_1, \dots, y_m]/(g_1, \dots, g_s) \to \mc{O}_{S,s}[x_1, \dots, x_{n+r}]/(f_1, \dots, f_r)$ where the determinant of the Jacobian matrix of the $f_i$ in $x_1, \dots, x_r$ is invertible. 
 	We can spread to some smaller open of $S'$ where it is smooth (by inverting the finitely many denominators appearing in coefficients of the $f_i, g_i$ and images of $y_i$) so we may assume further that $Y_{S'}$ is smooth over $S'$.
-	By \Cref{etale-basechange} $Y_{S'}$ is a N\'eron model for its generic fiber, which is the same as $Y_{s'}$, thus $u_K$ lifts up to a map $u': Y_{S'} \to X \times_S S'$, in which case the map $u' \times \mc{O}_{S,s}: Y_{S'} \times \mc{O}_{S,s} \to X \times \mc{O}_{S.s}$ is a map from $Y_{s'}$ extending $u_K$, so it is a N\'eron model by \Cref{unique-extension}.\newline
+	By \Cref{etale-basechange} $X_{S'} = X \times_S S'$ is a N\'eron model for its generic fiber, which is the same as the generic fiber of $X \times_S \mc{O}_{S,s}$, thus $u_K$ can be viewed as a map of generic fibers of $Y_{S'}$ and $X_{S'}$.
+	Thus, $u_K$ lifts up to a map $u': Y_{S'} \to X \times_S S'$, in which case the map $u' \times \mc{O}_{S,s}: Y_{S'} \times \mc{O}_{S,s} \to X \times \mc{O}_{S.s}$ is a map from $Y_{s'}$ extending $u_K$, so $X \times_S S'$ is a N\'eron model by \Cref{unique-extension}.\newline
 	\indent Conversely, assume that $X \times_X \mc{O}_{S,s}$ is a N\'eron model of its generic fiber for all $s$. 
 	Consider any smooth $S$-scheme $Y$ and a map $u_K: Y_K \to X_K$ of the generic fibers. These (perhaps restricting to generic points) are maps of generic fibers of $Y \times_S \mc{O}_{S,s} \to X \times_S \mc{O}_{S,s}$, so lift to unique extension of $u_K$ for each $s$. By \Cref{EGA-lemma},(a) these lift to maps $Y \times_S S' \to X \times_S S'$ for some open $S'$ containing $s$. Once again, they can be glued together to give a map $Y \to X$ extending $u_K$ and so $X$ is a N\'eron model for its generic model by \Cref{unique-extension}.
 \end{proof}
 
 Thus the existence of a global N\'eron model $X$ gives us the existence of all local N\'eron models $X \times \mc{O}_{S,s}$ and furthermore being a N\'eron model for its generic fiber can be checked locally.
+The following proposition tells us that that to construct a Neron model, it suffices to show the existence one over an open set, as well as ones over finitely many other closed points.
 
 \begin{proposition}
 	Let $S$ be a Dedekind scheme with ring of rational functions $K$, and let $X_K$ be a smooth and separated $K$-scheme of finite type.
@@ -526,7 +592,7 @@ Thus the existence of a global N\'eron model $X$ gives us the existence of all l
 	To prove the other direction, consider a smooth $S$-scheme $Y$ and $u_K: Y_K \to X_K$ a $K$-morphism of their generic fibers. 
 	Now $u_K$ (up to perhaps restriction to generic point) are the maps of generic points on the $X_{S'} \colonequals X \times_S S'$ and $X \times_S \mc{O}_{S,s}$ so by the N\'eron mapping property have unique extensions of $u_K$.
 	Consider any $s \in S - S'$, by \Cref{EGA-lemma},(a), the lift $Y \times_S \mc{O}_{S,s} \to X \times_S \mc{O}_{S,s}$ lifts to a map $Y \times_S U \to X \times_S U$ for an open $U \supset s$.
-	Now these maps can be glued together on opens in $Y$, and so define a global lift of $u_K$ from $Y \to X$, hence $X$ is N\'eron model for its generic fiber as claimed.
+	Now these maps can be glued together on opens in $Y$ using \Cref{unique-extension}, and so define a global lift of $u_K$ from $Y \to X$, hence $X$ is N\'eron model for its generic fiber as claimed.
 \end{proof}
 
 
@@ -535,7 +601,7 @@ Thus the existence of a global N\'eron model $X$ gives us the existence of all l
 In this section, we prove the existence of N\'eron models for elliptic curves over $K$, the fraction field of a Dedekind domain $R$. 
 The majority of our time will be spent in showing the existence for the local case where $R$ is a discrete valuation rings, which will requires the introduction of the notion of special henselization. \newline
 
-Before we get too deep, let's just consider the problem of constructing $S$-models of $K$-schemes without worrying about them having nice properties quite yet.
+Beforehand, let us just consider the problem of constructing $S$-models of $K$-schemes without worrying about them having nice properties quite yet.
 For simplicity, assume that $S = \text{Spec}(R)$ for $R$ a Dedekind domain.
 In the affine case, suppose we have $X \cong \text{Spec}(K[x_1, \dots, x_n]/I)$, where we may let $I = (f_1, \dots, f_n)$ have finitely many generators by noetherianity. 
 We do the most natural thing and note that we can scale the finitely many $f_i$ by a nonzero common multiple (though not unique) $r \in R$ such that each $rf_i \in R[x]$.
@@ -544,19 +610,22 @@ In this way, we have that $R[x]/(rf_1, \dots, rf_n)$ is a model for $X$ as the g
 as $r$ is a unit in $K$. \newline
 
 \indent Similarly, in the projective case when $K \cong \text{Proj}(K[x_1, \dots, x_n]/(g_1, \dots, g_n))$ for homogeneous $g_i$ we can similarly scale them by nonzero (and still non-unique) $r \in R$ to obtain integral models $\text{Proj}(R[x_1, \dots, x_n]/(rg_1, \dots, rg_n))$  for $X$.
-In fact, note that $X$ is still projective, so satisfies the property that $K$-points extend uniquely to $R$-points, an important consequence of the N\'eron mapping property ().
+In fact, note that $X$ is still projective, so satisfies the property that $K$-points extend uniquely to $R$-points, an important consequence of the N\'eron mapping property.
 
-
-
-An elliptic curve $E/K$ is a projective curve, so as mentioned in the discussion above there are projective $\text{Spec}(R)$-models for $E$ which are potential candidates for N\'eron models.
+An elliptic curve $E/K$ is a projective curve, so as mentioned in the above discussion there are projective $\text{Spec}(R)$-models for $E$ which are potential candidates for N\'eron models.
 In this section we will show that in the case when $E$ has good reduction the N\'eron mdoel can be recovered this way. 
 However, more work will need to be done when there is bad reduction.
 In these cases, note that the special fibers given by the same Weierstrass equation may be singular, in which case they have exactly one-singular point (see \cite{AEC1}, III, Proposition 1.4).
 
 \subsection{Good Reduction}
 
+The projective subscheme $W \subset \mb{P}^2_R$ defined by a Weierstrauss equation of an elliptic curve $E$ (up to a change of coordinates to make sure it coefficients lie in $R$) is perhaps one of the most natural $R$-models one can think of.
+Looking for a N\'eron model, we note that by definition it must be smooth, though $W$ need not be.
+Then considering just the largest smooth locus $W^0$ (open from definition of smoothness) of $W$, we will see that it in fact will be a N\'eron model when $W$ has good reduction everywhere. 
+We first begin to show this in the case when $R$ is a discrete valuation below, where we first show that the group scheme structure of $E$ extends to $W^0$.
+
 \begin{theorem}\label{theo:4.1}
-	Let $R$ be a discrete valuation ring, and $K$ its fraciton field. 
+	Let $R$ be a discrete valuation ring, and $K$ its fraction field. 
 	Let $E/K$ an elliptic curve and choose a Weierstrass equation 
 	\[y^2z + a_1xyz + a_3yz^2 = x^3 + a_2x^2z + a_4xz^2 + a_6z^3\]
 	with coefficients in $R$ which defines a projective subscheme of $W \subset \mb{P}^2_R$.
@@ -577,7 +646,7 @@ In these cases, note that the special fibers given by the same Weierstrass equat
 	To prove (1), note that 
 	\[W/R = \text{Proj}(R[x,y,z]/y^2z + a_1xyz + a_3yz^2 - x^3 - a_2x^2z - a_4xz^2 - a_6z^3)\]
 	the generic fiber upon base-changing is given in $\mb{P}^2_K$ by the same equation which is $E/K$.
-	In the case of bad reduction, the smooth subscheme is obtained by removing the singular points of the special fiber (\Cref{smoothness-lemma}), which as noted is a closed point of the special fiber in which case the generic fiber remains the same.\newline
+	In the case of bad reduction, the smooth subscheme is obtained by removing the singular points of the special fiber (see \Cref{smoothness-lemma}), which as noted is a closed point of the special fiber in which case the generic fiber remains the same.\newline
 	\indent For (2), note that $W$ is a projective scheme hence it is proper.
 	Then the first part of \Cref{proper-regular-prop} gives us that $E(K) = W(R)$ and assuming that $W$ is regular, and the second part gives us a bijection $W^0(R) \to W(R) \to E(K)$. \newline
 	\indent We will only outline the proof for (3), note that since $R$ is a discrete valuation ring, the generic point is open in $\text{Spec}(R)$ so the generic fiber is a dense open subscheme of $W$.
@@ -590,11 +659,22 @@ In these cases, note that the special fibers given by the same Weierstrass equat
 	Note the negation map is given by $i: W \dashrightarrow W$ sending $x,y,z$ to $x,-y,z$ respectively.
 	The induced map is in fact defined on all of $W$ as the the irrelevant ideal (the ideal generated by $x,y,z$) maps to itself (see \cite{FOAG}, 7.4.A).
 So all that remains is to consider the multiplication map $u$.	
-In fact, one can show that if $W$ is smooth over $R$ then $\mu$ is a moprhism on all of $W \times_R W$ and if it isn't smooth, then for $\gamma$ the singular point of the special fiber it is smooth except at the closed subscheme $\gamma \times \gamma \subset W \times_R W$.
+In fact, one can show that if $W$ is smooth over $R$ then $\mu$ is a morphism on all of $W \times_R W$ and if it isn't smooth, then for $\gamma$ the singular point of the special fiber it is smooth except at the closed subscheme $\gamma \times \gamma \subset W \times_R W$.
 We first denote $W_{aff} = D(z)$ be the corresponding affine of $W$.
-Now the formula [\cite{AEC1}, III.2.3] is given by the induced map on by the coordinates 
-	\todo{fill in proof outline}
+Now the formula [\cite{AEC1}, III.2.3] is given by the induced map on by the coordinates  
+\begin{align*}
+	\mu = &[(x_2 - x_1)((y_2 - y_1)^2 - (x_2 - x_1)^2(x_2+ x_1)),\\
+		  &(y_2 - y_1)^3 + (x_2 - x_1)^2(x_1y_1 - x_2y_2 + 2x_2y_1 - 2x_1y_2), (x_2 - x_1)^3]
+\end{align*}
+This extends $\mu$ on $W_{aff} \times W_{aff}$ except possible at the subscheme where all three coordinate functions vanish, which is initially where $x_2 - x_1 = y_2 - y_1 = 0$.
+Using the relations $y_1^2 = x_1^3 + Ax_1 + B$ (similarly for $y_2, x_2$) we can rewrite the addition map, and using the assumption our characteristic is not 2, and after some simplification show $\mu$ is a morphism except at possibly the closed subscheme defined by
+\[y = 3x^2 + A = 0\]
+Now assuming our characteristic is not 3, we can furthermore show the discriminant $4A^3 + 27B^2$ is contained in the ideal generated by $y$ and $3x^2 + A$.
+If $W$ is smooth over $R$, then the discriminant is a unit so the vanishing set is empty, otherwise it is the singular point on the special fiber.
+This gives us that $\mu$ extends to $W_{aff} \times W_{aff}$ for $W_{aff}$ the open where $Z$ does not vanish, and very similar arguments give it for the other affines where $X$ and $Y$ don't vanish.
 \end{proof}
+
+Finally, using the local-global results of the previous subsection, the local case above for discrete valuation rings gives us the general case when there is good reduction everywhere.
 
 \begin{theorem}
 	Let $R$ be a Dedekind domain with fraction field $K$ and let $E/K$ an elliptic curve.
@@ -606,12 +686,12 @@ Now the formula [\cite{AEC1}, III.2.3] is given by the induced map on by the coo
 
 \begin{proof}
 	By \Cref{lg:closed}, it suffices to show that $W \times_{\text{Spec}(r)} R_{\mk{p}}$ is a N\'eron model for $E/K$ for each prime $\mk{p}$ of $R$.
-	Now $R_{\mk{p}}$ is a discrete valuation ring as $R$ is a Dedekind domain, and $W \times_{\text{Spec}(r)} R_{\mk{p}}$ is the projective subscheme of $\mb{P}^2_{R_{\mk{p}}}$ given by the same defining equation, so by \Cref{theo:4.1} there is group scheme structure on $W^0$, which is equal to $W$ under the assumption that $W$ has good reduction, in which case \Cref{prop:3.7} gives us $W \times_{\text{Spec}(r)} R_{\mk{p}}$  is a N'eron model as claimed.
+	Now $R_{\mk{p}}$ is a discrete valuation ring as $R$ is a Dedekind domain, and $W \times_{\text{Spec}(r)} R_{\mk{p}}$ is the projective subscheme of $\mb{P}^2_{R_{\mk{p}}}$ given by the same defining equation, so by \Cref{theo:4.1} there is group scheme structure on $W^0$, which is equal to $W$ under the assumption that $W$ has good reduction, in which case \Cref{prop:3.7} gives us $W \times_{\text{Spec}(r)} R_{\mk{p}}$  is a N\'eron model as claimed.
 \end{proof}
 
 \subsection{Bad Reduction}
 
-We have just in the case when the elliptic curve has good reduction over all primes of $R$, that the corresponding projective curve in $\mb{P}^2_R$ gives us the N'eron model.
+Foran elliptic curve with good reduction over all primes of $R$, we now have the corresponding projective curve in $\mb{P}^2_R$ gives us the N\'eron model.
 The case when there is bad reduction is not as straightforward: we will need to appeal to minimal proper regulars, and first show it in the local case for the strict henselization of a local ring.
 Afterwards, we descend to the general discrete valuation case, and using our results for the good reduction case, we can "glue" together our N\'eron models at the bad primes to form our N\'eron model over an Dedekind domain.
 With this, we introduce an important notion for this section.
@@ -631,19 +711,36 @@ With this, we introduce an important notion for this section.
 \end{example}
 
 We won't work with the above completions as they may be "too large" in the sense that they won't always be flat over $R$, which we will later on need.
+We will give an an extension of Hensel's lemma in the case of multiple polynomials, (which can be found in [\cite{ROS}, pg. 289]) which will only be needed to prove the proceeding result.
+
+\begin{lemma}[Multi-dimensional Hensel's Lemma]\label{multi-dim-hensel}
+	Let $(R, \mk{m}, k)$ be a henselian discrete valuation ring.
+	For polynomials $f_1, \dots, f_n \in R[x_1, \dots, x_n]$, assume that there exists $b = (b_1, \dots, b_n) \in R^n$ such that 
+	\[\text{$f_i(b) \equiv 0 \pmod{\mk{m}}$ for all $1 \leq i \leq n$ and $\text{det}\left[ \frac{\partial f_i}{\partial x_j}\right]_{1 \leq i,j \leq n}(b) \not\equiv 0 \pmod{\mk{m}}$ } \]
+	Then there exists a unique $a = (a_1, \dots, a_n) \in R^n$ such that $f(a) = 0$ and $a_i \equiv b_i \pmod{\mk{m}}$ for all $i$.
+\end{lemma}
 
 \begin{proposition}
 	Let $(R, \mk{m}, k)$ be a discrete valuation ring. 
-	Let $X/R$ be a smooth $R$-scheme and $\overline{X}/R$ it special fiber. 
+	Let $X$ be a smooth $R$-scheme and $\overline{X}$ its special fiber. 
 	If $R$ is Henselian, then the reduction map
 	\[X(R) \to \overline{X}(k)\]
 	is surjective.
+	Furthermore, if $k = \overline{k}$ is algebraically closed then the image of $X(R)$ under the reduction map is dense in $\overline{X}(k)$.
 \end{proposition}
 
 \begin{proof}
-	\cite{AEC2}, pg 342.
+	For any $k$-point of $\overline{X} \subset X$, we may choose an affine around it, which reduces us to the affine case where, by smoothness of $X$ over $\text{Spec}(R)$, we may assume
+	\[X = \text{Spec}(R[x_1, \dots, R_{n+r}]/(f_1, \dots, f_r))\]
+	such that $\text{det}\left[ \frac{\partial f_i}{\partial x_j}\right]_{1 \leq i,j \leq r}$ is invertible.
+	A $k$-point is a $x = (x_1, \dots, x_{n+r}) \in k^n$ such that $\overline{f}_i(x) = 0$ for all $1 \leq i \leq r$ for $\overline{f}_i$ the reduction of $f$ mod $\mk{m}$.
+	Let $a_{1}, \dots, a_{n+r}$ be lifts of $x_{1}, \dots, x_{n+r}$ to $R$ and for $1 \leq i \leq n$ define
+	\[g_i = f(x_1, \dots, x_r, a_{r+1}, \dots, a_{n+r}) \in R[x_1, \dots, x_n]\]
+	Then $g_i(a_1, \dots, a_{n+r}) \equiv 0 \pmod{\mk{m}}$ for all $i$ by construction, furthermore by assumption, $\text{det}\left[ \frac{\partial f_i}{\partial x_j}\right]_{1 \leq i,j \leq n}$ evaluated at $(a_1, \dots, a_r)$ is invertible, hence $\not\equiv 0 \pmod{\mk{m}}$, so by \Cref{multi-dim-hensel} there exists a unique $a = (a_1, \dots, a_n) \in R^n$ such that $f(a) = 0$ and $a_i \equiv b_i \pmod{\mk{m}}$ for all $i$, i.e. an $R$-point of $X$ which shows surjectivity.
+	Now when $k = \overline{k}$ is algebraically closed, note the special fiber $\overline{X}$ is locally of finite type over $\text{Spec}(k)$ (being the base change of a smooth scheme), in which case the $k$-points are the closed points (as $k$ is algebraically closed), and hence are dense in $\overline{X}$.
 \end{proof}
 
+We now mention a way of constructing (strict) henselizations given any discrete valuation ring.
 
 \begin{proposition}[(Strict) Henselization of DVRs]
 	Let $(R, \mk{m}, k)$ be a discrete valuation ring with fraction field $K$.
@@ -652,24 +749,44 @@ We won't work with the above completions as they may be "too large" in the sense
 	\begin{enumerate}
 		\item Let $R^s(D)$ denote the subring of $R^s$ fixed by $D$ and define $R^h$ the localization of $R^s(D)$ at the maximal ideal $\mk{p} \ic R^s(D)$.
 		Then $R^h$ is Henselian and is called the \textit{Henselization} of $R$.
-	\item Let $R^s(I)$ denote the subring of $R^{s}$ fixed by $D$ and define $R^{sh}$ the lcoalization of $R^s(I)$ at the maximal ideal $\mk{p} \ic R^s(I)$.
-		Then $R^{sh}$ is Henselian and is called the \textit{strict Henselization} of $R$.
+	\item Let $R^s(I)$ denote the subring of $R^{s}$ fixed by $D$ and define $R^{sh}$ the localization of $R^s(I)$ at the maximal ideal $\mk{p} \ic R^s(I)$.
+		Then $R^{sh}$ is strictly Henselian and is called the \textit{strict Henselization} of $R$.
 	\end{enumerate}
 	
 \end{proposition}
 
-\begin{remark}
-	There are other equivalent definitions for the (strict) henselization of a discrete valuation ring.
+\begin{proof}
+The map $\text{Spec}(R^s) \to \text{Spec}(R)$ is integral by construction: in particular its fibers are dimension 0 [\cite{FOAG}, 12.1.E], so $\mk{p} \ic R^s(D)$ is of height 1 in $R^s(D)$ hence $R^h$ is a local ring of dimension 1. 
+It is regular as it is integrally closed since $R^s$ is (see \cite{FOAG}, 13.5.8), so $R^h$ is a discrete valuation ring, the same argument applies to $R^{sh}$ as well.\newline
+\indent We now show that $R^h$ is henselian.
+Let $f(x) \in R^h[x]$ be a monic polynomial. 
+We may assume that $f$ is irreducible (otherwise just choose an irreducible component of $f$) and separable (otherwise $f' = 0$).
+Factor $f$ over $K^s$ as
+\[f(x) = (x - r_1)\dots(x - r_n)\]
+If $f(a) \in \mk{p}^h$ and $f'(a) \notin \mk{p}^h$ then only one of the $r_i$ can be congruent to $a$ mod $\mk{p}^h$ which we denote as $r$; we claim that this is our unique lift.
+Indeed, for any $\sigma \in D$ we have 
+\[a - \sigma(r) = \sigma(a - r) \in \sigma(\mk{p}^h) = \mk{p}^h\]
+so it must be the one unique root, which shows the uniqueness of $r$.
+The same arugment applies verbatim in the case of $R^{sh}$ as we note that $I \subset D$ from definition.
+\end{proof}
 
+\begin{remark}
+	There are other equivalent definitions for the (strict) henselization of a discrete valuation ring $R$, which can be defined through the expected universal property as the "smallest" (strict) henselian ring $R$.
+	The strict henselization can also be defined as the filtered limit over all \'etale local algebras of $R$, for more details on this one can consult $\cite{BLR}, 2.3$.
 \end{remark}
 
-\begin{theorem}
-	Let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
-	Then $X^0/R$ is a N\'eron model for $E/K$.
+We now have the necessary background to begin our proof in the general case starting when there is locally bad reduction.
+We first show that the smooth locus of the minimal model of an elliptic curve is the N\'eron model over a strict henselian ring.
+
+\begin{theorem}\label{theo:4.7}
+	Let $R$ be a strict henselian discrete valuation ring with fractions field $K$ and let $E/K$ be an elliptic curve.
+	Let $X/\text{Spec}(R)$ be the minimal proper regular model for $E/K$ and let $X^0$ be the largest subscheme of $X$ which is smooth over $\text{Spec}(R)$.
+	Then the group law of $E$ extends to make $X^0$ into a group scheme over $\text{Spec}(R)$. 
 \end{theorem}
 
+\todo{cite Weil}
 The proof is a bit long and involved, and we will sketch various parts of it. 
-We first give the definition of a normal group law, 
+Beforehand, we will give a few preliminary definitions/results.
 
 \begin{definition}
 	For $R$ a Dedekind domain, and $X/R$ a smooth $R$-scheme with non-empty fibers, let 
@@ -679,16 +796,165 @@ Then $\mu$ is called a \textit{normal law on X} if it satisfies the two followin
 \begin{enumerate}
 	\item The map $\mu$ is associative, i.e. we have wherever both sides are defined below that
 		\[\mu(\mu(x,y),z) = \mu(x, \mu(y,z))\]
-    \item 
+    \item  Consider the rational maps 
+		\begin{align*}
+			&\phi: X \times_R X \dashrightarrow X \times_R X \quad  &\varphi: X \times_R X \dashrightarrow X \times_R X\\
+					&(x,y) \to (x, \mu(x,y)) &(x,y) \to (y, \mu(x,y))
+		\end{align*}
+	then their domains of definition contains a dense subset of each fiber of $X \times_R X$ and the restriction of $\phi$ and $\varphi$ to each fiber is a birational morphism.	
 \end{enumerate}
 
 \end{definition}
 
+For example, the group law on a group scheme can be shown to satisfy the above conditions.
+One may thus think of a normal group law as a "pseudo group-law", which we will need to work with in extending the group law of the generic fiber of our potential N\'eron model.
+
+\begin{theorem}\label{theo:4.9}
+	Let $R$ be a Dedekind domain, and let $X$ be a smooth $R$-scheme that is of finite type over $\text{Spec}(R)$.
+	Suppose that every fiber of $X$ is non-empty that that $X(R)$ is dense in each fiber.
+	Let $\mu$ be a normal law on $X$.
+	Then there exists a group scheme $G$ of finite type over $\text{Spec}(R)$ along with open subschemes $U \subset X$ and $U' \subset G$ satisfying the following two properties:
+	\begin{enumerate}
+		\item $U$ and $U'$ are dense in every fiber of $X$ and $G$ respectively.
+		\item There is an $R$-isomorphism $U \cong U'$ so that the normal law of $\mu$ restricted to $U$ coincides with the group law of $G$ restricted to $U'$.
+	\end{enumerate}
+	
+\end{theorem}
+
+\begin{proof}
+	We only sketch the idea here.
+	For each $x \in U(R)$, we let $U_x$ denote a copy of $U$.
+	Then the group scheme $G$ is constructed by viewing the $U_x$ as being "$U$ translated by $x$", with the normal group law $\mu$ providing the gluing data.
+\end{proof}
+
+We now being the proof of \Cref{theo:4.7} 
 
 
-\section{Sample Computations of N\'eron Models}
+\begin{proof}
+	We first verify that the group law on $E$ defines a normal law on $X^0$.
+	
+\end{proof}
+
+\begin{corollary}
+	Let $R$ be a discrete valuation ring with field of fractions $K$ and let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
+	Then $X^0/R$ is a N\'eron model for $E/K$. 
+\end{corollary}
+
+\begin{proof}
+	Use faithfully flat descent + facts from minimal models.
+\end{proof}
 
 
+
+\subsection{The Global Case}
+
+With everything we've developed so far, we are now ready for the case over any Dedekind scheme.
+
+\begin{theorem}\label{main-theorem}
+	Let $E/K$ be an elliptic curve, and $X/R$ a minimal proper regular model for $E/K$, and $X^0/R$ the largest open subscheme of $X/R$ which is smooth over $R$.
+	Then $X^0/R$ is a N\'eron model for $E/K$.
+\end{theorem}
+
+\begin{proof}
+	There exists an open subset $U \subset S$ that contains only the points with good reduction (on each affine, choose primes not dividing not dividing the discriminant).
+	Then 
+\end{proof}
+
+
+\section{Descriptions of N\'eron Models for Elliptic Curves}
+
+
+
+In this section we discuss 
+
+
+\subsection{Special Fibers of Minimal Models}
+
+[\cite{AEC2}, IV, Theorem 8.2]
+
+\begin{theorem}[Kodaira, N\'eron]	
+Let $(R, \mk{m}, k)$ be a discrete valuation ring with fraction field $K$, and assume $k = \overline{k}$ is algebraically closed.
+	Let $E/K$ be an elliptic curve, and $C/R$ the minimal proper regular model for $E$.
+	Then the special fiber $C_{\mk{m}}$ has one of the following forms.
+
+\end{theorem}
+
+
+[\cite{AEC2}, IV, Proposition 8.1]
+\begin{proposition}
+	Let $(R, \mk{m}, k)$ be a discrete valuation ring with fraction field $K$, and assume $k = \overline{k}$ is algebraically closed.
+	Let $E/K$ be an elliptic curve, and $C/R$ the minimal proper regular model for $E$.
+	Suppose that the special fiber of $C$ contains r irreducible components $F_1, \dots, F_r$ and write the special fiber
+	\[C_{\mk{m}} = \sum_{i=1}^r n_i F_i\]
+	where $n_i$ denotes the multiplicity of the component $F_i$ in $C_{\mk{m}}$.
+	Then 
+\begin{enumerate}
+	\item At least one of the $n_i$'s is equal to 1.
+	\item Let $K_C$ be a canonical divisor on $C$. Then
+		\[K_C \cdot F = 0 \text{ for all fibral divisors $F \in \text{Div}_{\mk{m}}(C)$}\]
+	\item If $r = 1$, then $F_1^2 = 0$ and $p_a(F_1) = 1$ where $p_a$ denotes the (arithmetic) genus.
+	\item Suppose that $r \geq 2$. Then for each $1 \leq i \leq r$, we have 
+		\[F_i^2 = -1, \quad F_i \cong \mb{P}_k^1, \quad \text{and} \quad \sum_{1 \leq j \leq r, j \neq i} n_j F_j \cdot F_i = 2n_i\]
+\end{enumerate}
+
+
+
+\end{proposition}
+
+
+
+\subsection{Explicit Calculations}
+
+
+[\cite{BLR}, 1.5, Lemma 5]
+\begin{proposition}
+	Let $E_K$ be an elliptic curve, $E^0$ the correspondign projective subscheme defined by a minimal Weierstrass equation for $E_K$, and $E^1, \dots, E^r$ be smooth and separated $R$-models of $E$.
+Assume that for all $k$ that the special fiber $E_k^i$ is isomorphic to $E^0_k$ as a $k$-scheme. 
+Furthermore, assume that the invariant differential $\omega = \frac{dx}{y}$ has $\pi$-order 0 over all $E^i_k$ and that the canonical map $\coprod_{k=0}^r E^i(R) \to E_K(K)$ is bijective.
+Then gluing the $E^i$ along the generic fiber $E_K$, we obtain the N'eron model $E$ of $E_K$.
+Furthermore, $E^0$ is the identity component of $E$.
+\end{proposition}
+
+\begin{proof}
+	We only outline the proof, the idea is that
+\end{proof}
+
+Throughout this section $\Z_{(a)}$ is $\text{Spec}(\Z)$ localized at $a$, corresponding to the open subscheme of $\text{Spec}(\Z)$ with complement those primes dividing $a$.
+We now give an explicit description of the N\'eron model over $\text{Spec}(\Z)$ for the elliptic curve defined by the Weierstrass equation
+\[y^2 = x^3 + 37x + 438\]
+Information on this elliptic curve can be found at the \href{https://www.lmfdb.org/EllipticCurve/Q/145/a/2}{LMFDB}. \newline
+
+We see that its minimal discriminant and $j$-invariant are 
+\[\Delta = -21025 = -5^2\cdot 29^2 \quad \quad j = \frac{1367631}{21025} = 3^3 \cdot 5^{-2} \cdot 29^{-2} \cdot 37^3\]
+so it has bad reduction at exactly the primes 5 and 29.
+We know that the projective of subscheme $E^0 = \mb{P}_{\Z}^2$ defined by its Weierstrass equation, which is 
+\[\text{Proj}(\Z[x,y,z]/(y^2z - x^3 -37xz^2 - 438z^3))\]
+is the identity component of the N\'eron model of $E$ by CITEEE.
+Furthermore, its basechange to the open $\Z_{(5 \cdot 29)} = \Z_{(145)}$ which has good reduction everywhere is the N\'eron model over $\Z_{(145)}$ (by CITEEE).
+To get the N\'eron model over $\text{Spec}(\Z)$, we first need to find the N\'eron models over the stalks at the bad primes before "spreading them" to an open and gluing them together.
+In general as in the proof of $\cite{main-theorem}$, we may need to work with the strict henselizations of the stalks $\Z_{(5)}$  and $\Z_{(29)}$ of $\text{Spec}(\Z)$ at $p=5$ and $p=29$.
+In this case we will be fortunate in that the coefficients appearing in the corresponding schemes can already be taken to be in $\Z$, in which we won't need to do extra work when descending to the stalks and spreading out.
+As we see that for both $p = 5,29$ that $v_p(j) < 0$ and $v_p(\Delta) = 2$, we may Case CITEEE at both the bad primes as below. \newline
+Beforehand, we note that we have the factorization 
+\[P(x) \colonequals x^3 +37x + 438 = (x+6)(x - (3 + 8i))(x - (3 - 8i))\]
+
+\noindent \textbf{p = 5:} Denote $R_5$ the strict henselization of the stalk $Z_5 = \{ \frac{a}{b} \in \Q| 5 \nmid b\}$.
+The reduction of $P(x)$ mod the maximal ideal of $R_5$ is simply taking it mod 5, so 
+\[\overline{P}(x) = x^3 +2x +3 = (x-4)^2(x-2)\]
+where the root -6 reduces to 3 mod 5, and denoting $i = 3$ the solution to $x^2 + 1 = 0$ we see the roots $3 \pm 8i$ are 2,4 mod 5.
+Thus the singular point of the reduction of $E$ mod 5 is at (4,0).
+We may lift the solution of 3 to $x^2 + 1$ from the residue field $\overline{\mb{F}}_5$ to $R_5$ as it is henselian, which we denote as $i$.
+
+ 
+\noindent \textbf{p = 29:}
+
+
+Thus, to summarize, we have the minimal Weierstrass equation 
+\[\text{Proj}(\Z[x,y,z]/(y^2z - x^3 -37xz^2 - 438z^3))\]
+gives us the identity component of the N\'eron model, and in fact the N\'eron model away from the bad primes at 5 and 29.
+At the bad primes, we need to glue additional spaces at the corresponding fibers.
+In particular, 
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{lib}
